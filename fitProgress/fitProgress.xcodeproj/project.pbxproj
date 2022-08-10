@@ -7,22 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45AFA30F2894389C0001B623 /* Fit_ProgressApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AFA30E2894389C0001B623 /* Fit_ProgressApp.swift */; };
-		45AFA3112894389C0001B623 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AFA3102894389C0001B623 /* ContentView.swift */; };
-		45AFA313289438A10001B623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45AFA312289438A10001B623 /* Assets.xcassets */; };
-		45AFA316289438A10001B623 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45AFA315289438A10001B623 /* Preview Assets.xcassets */; };
+		4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FCB728A4232100862D81 /* AppDelegate.swift */; };
+		4576FCBC28A4232100862D81 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FCBB28A4232100862D81 /* ViewController.swift */; };
+		4576FCC128A4232300862D81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4576FCC028A4232300862D81 /* Assets.xcassets */; };
+		4576FCC428A4232300862D81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4576FCC228A4232300862D81 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		45AFA30B2894389C0001B623 /* Fit-Progress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fit-Progress.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		45AFA30E2894389C0001B623 /* Fit_ProgressApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fit_ProgressApp.swift; sourceTree = "<group>"; };
-		45AFA3102894389C0001B623 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		45AFA312289438A10001B623 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		45AFA315289438A10001B623 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4576FCB428A4232100862D81 /* fitProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4576FCB728A4232100862D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4576FCBB28A4232100862D81 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4576FCC028A4232300862D81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4576FCC328A4232300862D81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4576FCC528A4232300862D81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		45AFA3082894389C0001B623 /* Frameworks */ = {
+		4576FCB128A4232100862D81 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -32,77 +33,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		45AFA3022894389C0001B623 = {
+		4576FCAB28A4232100862D81 = {
 			isa = PBXGroup;
 			children = (
-				45AFA30D2894389C0001B623 /* Fit-Progress */,
-				45AFA30C2894389C0001B623 /* Products */,
+				4576FCB628A4232100862D81 /* fitProgress */,
+				4576FCB528A4232100862D81 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		45AFA30C2894389C0001B623 /* Products */ = {
+		4576FCB528A4232100862D81 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45AFA30B2894389C0001B623 /* Fit-Progress.app */,
+				4576FCB428A4232100862D81 /* fitProgress.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		45AFA30D2894389C0001B623 /* Fit-Progress */ = {
+		4576FCB628A4232100862D81 /* fitProgress */ = {
 			isa = PBXGroup;
 			children = (
-				45AFA30E2894389C0001B623 /* Fit_ProgressApp.swift */,
-				45AFA3102894389C0001B623 /* ContentView.swift */,
-				45AFA312289438A10001B623 /* Assets.xcassets */,
-				45AFA314289438A10001B623 /* Preview Content */,
+				4576FCB728A4232100862D81 /* AppDelegate.swift */,
+				4576FCBB28A4232100862D81 /* ViewController.swift */,
+				4576FCC028A4232300862D81 /* Assets.xcassets */,
+				4576FCC228A4232300862D81 /* LaunchScreen.storyboard */,
+				4576FCC528A4232300862D81 /* Info.plist */,
 			);
-			path = "Fit-Progress";
-			sourceTree = "<group>";
-		};
-		45AFA314289438A10001B623 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				45AFA315289438A10001B623 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
+			path = fitProgress;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		45AFA30A2894389C0001B623 /* Fit-Progress */ = {
+		4576FCB328A4232100862D81 /* fitProgress */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 45AFA319289438A10001B623 /* Build configuration list for PBXNativeTarget "Fit-Progress" */;
+			buildConfigurationList = 4576FCC828A4232300862D81 /* Build configuration list for PBXNativeTarget "fitProgress" */;
 			buildPhases = (
-				45AFA3072894389C0001B623 /* Sources */,
-				45AFA3082894389C0001B623 /* Frameworks */,
-				45AFA3092894389C0001B623 /* Resources */,
+				4576FCB028A4232100862D81 /* Sources */,
+				4576FCB128A4232100862D81 /* Frameworks */,
+				4576FCB228A4232100862D81 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Fit-Progress";
-			productName = "Fit-Progress";
-			productReference = 45AFA30B2894389C0001B623 /* Fit-Progress.app */;
+			name = fitProgress;
+			productName = fitProgress;
+			productReference = 4576FCB428A4232100862D81 /* fitProgress.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		45AFA3032894389C0001B623 /* Project object */ = {
+		4576FCAC28A4232100862D81 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					45AFA30A2894389C0001B623 = {
+					4576FCB328A4232100862D81 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
 			};
-			buildConfigurationList = 45AFA3062894389C0001B623 /* Build configuration list for PBXProject "Fit-Progress" */;
+			buildConfigurationList = 4576FCAF28A4232100862D81 /* Build configuration list for PBXProject "fitProgress" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -110,42 +104,53 @@
 				en,
 				Base,
 			);
-			mainGroup = 45AFA3022894389C0001B623;
-			productRefGroup = 45AFA30C2894389C0001B623 /* Products */;
+			mainGroup = 4576FCAB28A4232100862D81;
+			productRefGroup = 4576FCB528A4232100862D81 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				45AFA30A2894389C0001B623 /* Fit-Progress */,
+				4576FCB328A4232100862D81 /* fitProgress */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		45AFA3092894389C0001B623 /* Resources */ = {
+		4576FCB228A4232100862D81 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45AFA316289438A10001B623 /* Preview Assets.xcassets in Resources */,
-				45AFA313289438A10001B623 /* Assets.xcassets in Resources */,
+				4576FCC428A4232300862D81 /* LaunchScreen.storyboard in Resources */,
+				4576FCC128A4232300862D81 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		45AFA3072894389C0001B623 /* Sources */ = {
+		4576FCB028A4232100862D81 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45AFA3112894389C0001B623 /* ContentView.swift in Sources */,
-				45AFA30F2894389C0001B623 /* Fit_ProgressApp.swift in Sources */,
+				4576FCBC28A4232100862D81 /* ViewController.swift in Sources */,
+				4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		4576FCC228A4232300862D81 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4576FCC328A4232300862D81 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		45AFA317289438A10001B623 /* Debug */ = {
+		4576FCC628A4232300862D81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -205,7 +210,7 @@
 			};
 			name = Debug;
 		};
-		45AFA318289438A10001B623 /* Release */ = {
+		4576FCC728A4232300862D81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -259,20 +264,18 @@
 			};
 			name = Release;
 		};
-		45AFA31A289438A10001B623 /* Debug */ = {
+		4576FCC928A4232300862D81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Fit-Progress/Preview Content\"";
 				DEVELOPMENT_TEAM = R5JCWQ932H;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = fitProgress/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -280,7 +283,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kotystannard.Fit-Progress";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kotystannard.fitProgress;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -288,20 +291,18 @@
 			};
 			name = Debug;
 		};
-		45AFA31B289438A10001B623 /* Release */ = {
+		4576FCCA28A4232300862D81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Fit-Progress/Preview Content\"";
 				DEVELOPMENT_TEAM = R5JCWQ932H;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = fitProgress/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -309,7 +310,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kotystannard.Fit-Progress";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kotystannard.fitProgress;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -320,25 +321,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		45AFA3062894389C0001B623 /* Build configuration list for PBXProject "Fit-Progress" */ = {
+		4576FCAF28A4232100862D81 /* Build configuration list for PBXProject "fitProgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				45AFA317289438A10001B623 /* Debug */,
-				45AFA318289438A10001B623 /* Release */,
+				4576FCC628A4232300862D81 /* Debug */,
+				4576FCC728A4232300862D81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		45AFA319289438A10001B623 /* Build configuration list for PBXNativeTarget "Fit-Progress" */ = {
+		4576FCC828A4232300862D81 /* Build configuration list for PBXNativeTarget "fitProgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				45AFA31A289438A10001B623 /* Debug */,
-				45AFA31B289438A10001B623 /* Release */,
+				4576FCC928A4232300862D81 /* Debug */,
+				4576FCCA28A4232300862D81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 45AFA3032894389C0001B623 /* Project object */;
+	rootObject = 4576FCAC28A4232100862D81 /* Project object */;
 }
