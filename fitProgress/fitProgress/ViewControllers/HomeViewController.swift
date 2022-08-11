@@ -26,6 +26,9 @@ extension HomeViewController {
         title = "Workouts"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(setupLogAlert))
         navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .edit)
     }
     
@@ -43,5 +46,27 @@ extension HomeViewController {
             listView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             listView.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    @objc private func setupLogAlert() {
+        let message = "Would you like to add a new workout or log your workout weight?"
+        let alert = UIAlertController(title: "Log Alert", message: message, preferredStyle: .alert)
+        
+        let newView = UIViewController()
+        newView.view.backgroundColor = .white
+        
+        alert.addAction(UIAlertAction(title: "New Workout", style: .default) { _ in
+            self.present(newView, animated: true)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Log Workout", style: .default) { _ in
+            self.present(newView, animated: true)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
 }
