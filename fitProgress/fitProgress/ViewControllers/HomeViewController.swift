@@ -6,17 +6,16 @@
 //
 
 import UIKit
-import SwiftUI
 
 class HomeViewController: UIViewController {
     
-    let listView = UIHostingController(rootView: WorkoutListView())
+    var tableView = UITableView(frame: .zero, style: .insetGrouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureNavigationBar()
-        configureWorkoutListView()
+        configureTableView()
     }
 }
 
@@ -25,30 +24,32 @@ extension HomeViewController {
     private func configureNavigationBar() {
         title = "Workouts"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
-                                                            action: #selector(setupLogAlert))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .edit)
+                                                            action: #selector(handleLogAlert))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+                                                           target: self,
+                                                           action: #selector(handleEdit))
     }
     
-    private func configureWorkoutListView() {
-        addChild(listView)
-        view.addSubview(listView.view)
-        setupListViewConstraints()
+    private func configureTableView() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        setupTableViewLayout()
     }
     
-    private func setupListViewConstraints() {
-        listView.view.translatesAutoresizingMaskIntoConstraints = false
+    private func setupTableViewLayout() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            listView.view.topAnchor.constraint(equalTo: view.topAnchor),
-            listView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            listView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            listView.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
-    @objc private func setupLogAlert() {
+    @objc private func handleLogAlert() {
         let message = "Would you like to add a new workout or log your workout weight?"
         let alert = UIAlertController(title: "Log Alert", message: message, preferredStyle: .alert)
         
@@ -68,5 +69,40 @@ extension HomeViewController {
         alert.addAction(cancelAction)
         
         present(alert, animated: true)
+    }
+    
+    @objc private func handleEdit() {
+        
+    }
+}
+
+extension HomeViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var header = ""
+        
+        if section == 0 {
+            header = "Push"
+        } else if section == 1 {
+            header = "Pull"
+        } else {
+            header = "Legs"
+        }
+        
+        return header
     }
 }
