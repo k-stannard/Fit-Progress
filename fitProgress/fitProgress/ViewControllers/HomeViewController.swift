@@ -9,6 +9,14 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    var headers = ["Push", "Pull", "Legs"]
+    
+    var sections = [
+        ["A", "B", "C", "D", "E"],
+        ["A", "B", "C", "D", "E"],
+        ["A", "B", "C", "D", "E"]
+    ]
+    
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
 
     override func viewDidLoad() {
@@ -16,6 +24,14 @@ class HomeViewController: UIViewController {
         
         configureNavigationBar()
         configureTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let index = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: index, animated: true)
+        }
     }
 }
 
@@ -27,14 +43,13 @@ extension HomeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(handleLogAlert))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
-                                                           target: self,
-                                                           action: #selector(handleEdit))
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     private func configureTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
+        tableView.delegate = self
         view.addSubview(tableView)
         setupTableViewLayout()
     }
@@ -57,7 +72,7 @@ extension HomeViewController {
         newView.view.backgroundColor = .white
         
         alert.addAction(UIAlertAction(title: "New Workout", style: .default) { _ in
-            self.present(newView, animated: true)
+            self.addWorkoutToList()
         })
         
         alert.addAction(UIAlertAction(title: "Log Workout", style: .default) { _ in
@@ -71,38 +86,60 @@ extension HomeViewController {
         present(alert, animated: true)
     }
     
-    @objc private func handleEdit() {
+    private func addWorkoutToList() {
+        headers.append("New Section")
+        sections.append([""])
         
+        let indexSet = IndexSet(integer: headers.count - 1)
+        tableView.performBatchUpdates {
+            tableView.insertSections(indexSet, with: .fade)
+        } completion: { _ in
+            print("New Section Added")
+        }
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        
+        tableView.setEditing(editing, animated: true)
     }
 }
 
+// MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        sections[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
+        cell.textLabel?.text = sections[indexPath.section][indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var header = ""
+        headers[section]
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        if section == 0 {
-            header = "Push"
-        } else if section == 1 {
-            header = "Pull"
-        } else {
-            header = "Legs"
-        }
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension HomeViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let newView = UIViewController()
+        newView.view.backgroundColor = .white
+        newView.title = "New View"
         
-        return header
+        navigationController?.pushViewController(newView, animated: true)
     }
 }
