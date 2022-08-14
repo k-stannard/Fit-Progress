@@ -7,14 +7,17 @@
 
 import UIKit
 
+struct Lifts: Hashable {
+    var name: String
+    var exercises: [String]
+}
+
 class HomeViewController: UIViewController {
-    
-    var headers = ["Push", "Pull", "Legs"]
-    
-    var sections = [
-        ["A", "B", "C", "D", "E"],
-        ["A", "B", "C", "D", "E"],
-        ["A", "B", "C", "D", "E"]
+        
+    var lifts = [
+        Lifts(name: "Push", exercises: ["A", "B", "C", "D", "E"]),
+        Lifts(name: "Pull", exercises: ["A", "B", "C", "D", "E"]),
+        Lifts(name: "Legs", exercises: ["A", "B", "C", "D", "E"])
     ]
     
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -40,10 +43,10 @@ extension HomeViewController {
     private func configureNavigationBar() {
         title = "Workouts"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(handleLogAlert))
-        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     private func configureTableView() {
@@ -85,18 +88,6 @@ extension HomeViewController {
         
         present(alert, animated: true)
     }
-    
-    private func addWorkoutToList() {
-        headers.append("New Section")
-        sections.append([""])
-        
-        let indexSet = IndexSet(integer: headers.count - 1)
-        tableView.performBatchUpdates {
-            tableView.insertSections(indexSet, with: .fade)
-        } completion: { _ in
-            print("New Section Added")
-        }
-    }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: true)
@@ -109,26 +100,70 @@ extension HomeViewController {
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
+        lifts.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].count
+        lifts[section].exercises.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = sections[indexPath.section][indexPath.row]
+        cell.textLabel?.text = lifts[indexPath.section].exercises[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        headers[section]
+        lifts[section].name
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteExerciseFromWorkout(with: indexPath)
+        }
+    }
+    
+    private func deleteExerciseFromWorkout(with indexPath: IndexPath) {
+        lifts[indexPath.section].exercises.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
         
+        print(lifts.count)
+        print(lifts[indexPath.section])
+        
+        tableView.performBatchUpdates {
+            if lifts[indexPath.section].exercises.isEmpty {
+                let currentSection = indexPath.section
+                let nextSection = currentSection + 1
+                
+                print("Current sectin: \(currentSection). Next section: \(nextSection)")
+                
+                if lifts[indexPath.section] != lifts.last {
+                    
+                    lifts.remove(at: indexPath.section)
+                    
+                    let indexSet = IndexSet(integer: indexPath.section)
+                    tableView.deleteSections(indexSet, with: .fade)
+                    tableView.moveSection(nextSection, toSection: currentSection)
+                } else {
+                    lifts.remove(at: indexPath.section)
+                    
+                    let indexSet = IndexSet(integer: indexPath.section)
+                    tableView.deleteSections(indexSet, with: .fade)
+                }
+            }
+        }
+    }
+    
+    private func addWorkoutToList() {
+        lifts.append(Lifts(name: "New workout", exercises: [""]))
+        
+        let indexSet = IndexSet(integer: lifts.count - 1)
+        tableView.insertSections(indexSet, with: .fade)
     }
 }
 
