@@ -14,19 +14,23 @@ struct Lifts: Hashable {
 
 class HomeViewController: UIViewController {
         
-    var lifts = [
-        Lifts(name: "Push", exercises: ["A", "B", "C", "D", "E"]),
-        Lifts(name: "Pull", exercises: ["A", "B", "C", "D", "E"]),
-        Lifts(name: "Legs", exercises: ["A", "B", "C", "D", "E"])
+    var lifts: [Lifts] = [
+//        Lifts(name: "Push", exercises: ["A", "B", "C", "D", "E"]),
+//        Lifts(name: "Pull", exercises: ["A", "B", "C", "D", "E"]),
+//        Lifts(name: "Legs", exercises: ["A", "B", "C", "D", "E"]),
+//        Lifts(name: "Legs", exercises: ["A"])
     ]
     
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
+    let emptyStateView = EmptyStateView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureNavigationBar()
         configureTableView()
+        configureEmptyStateView()
+        checkWorkoutIsEmpty()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,17 +58,40 @@ extension HomeViewController {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        setupTableViewLayout()
+        layoutTableView()
     }
     
-    private func setupTableViewLayout() {
+    private func layoutTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    private func configureEmptyStateView() {
+        view.addSubview(emptyStateView)
+        layoutEmptyStateView()
+    }
+    
+    private func layoutEmptyStateView() {
+        emptyStateView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            emptyStateView.topAnchor.constraint(equalTo: view.topAnchor),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            emptyStateView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func checkWorkoutIsEmpty() {
+        if lifts.isEmpty {
+            emptyStateView.isHidden = false
+        } else {
+            emptyStateView.isHidden = true
+        }
     }
     
     @objc private func handleLogAlert() {
@@ -156,6 +183,8 @@ extension HomeViewController: UITableViewDataSource {
                     tableView.deleteSections(indexSet, with: .fade)
                 }
             }
+            
+            checkWorkoutIsEmpty()
         }
     }
     
@@ -164,6 +193,8 @@ extension HomeViewController: UITableViewDataSource {
         
         let indexSet = IndexSet(integer: lifts.count - 1)
         tableView.insertSections(indexSet, with: .fade)
+        
+        checkWorkoutIsEmpty()
     }
 }
 
