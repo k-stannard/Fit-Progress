@@ -15,10 +15,9 @@ struct Lifts: Hashable {
 class HomeViewController: UIViewController {
         
     var lifts: [Lifts] = [
-//        Lifts(name: "Push", exercises: ["A", "B", "C", "D", "E"]),
-//        Lifts(name: "Pull", exercises: ["A", "B", "C", "D", "E"]),
-//        Lifts(name: "Legs", exercises: ["A", "B", "C", "D", "E"]),
-//        Lifts(name: "Legs", exercises: ["A"])
+        Lifts(name: "Push", exercises: ["Bench", "Cable Flies", "Tricep Pushdown"]),
+        Lifts(name: "Pull", exercises: ["Deadlift", "Barbell Rows", "Lat Pulldown", "Hammer Curls"]),
+        Lifts(name: "Legs", exercises: ["Squats", "Leg Press"])
     ]
     
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -102,7 +101,10 @@ extension HomeViewController {
         newView.view.backgroundColor = .white
         
         alert.addAction(UIAlertAction(title: "New Workout", style: .default) { _ in
-            self.addWorkoutToList()
+            let addWorkoutVC = AddWorkoutViewController()
+            let navController = UINavigationController(rootViewController: addWorkoutVC)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true)
         })
         
         alert.addAction(UIAlertAction(title: "Log Workout", style: .default) { _ in
@@ -159,15 +161,10 @@ extension HomeViewController: UITableViewDataSource {
         lifts[indexPath.section].exercises.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         
-        print(lifts.count)
-        print(lifts[indexPath.section])
-        
         tableView.performBatchUpdates {
             if lifts[indexPath.section].exercises.isEmpty {
                 let currentSection = indexPath.section
                 let nextSection = currentSection + 1
-                
-                print("Current sectin: \(currentSection). Next section: \(nextSection)")
                 
                 if lifts[indexPath.section] != lifts.last {
                     

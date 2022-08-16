@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45204A8228AABE5F00BD7099 /* EmptyStateView.swift */; };
+		453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */; };
 		4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FCB728A4232100862D81 /* AppDelegate.swift */; };
 		4576FCBC28A4232100862D81 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FCBB28A4232100862D81 /* HomeViewController.swift */; };
 		4576FCC128A4232300862D81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4576FCC028A4232300862D81 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		45204A8228AABE5F00BD7099 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutViewController.swift; sourceTree = "<group>"; };
 		4576FCB428A4232100862D81 /* fitProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4576FCB728A4232100862D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4576FCBB28A4232100862D81 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				4576FCBB28A4232100862D81 /* HomeViewController.swift */,
+				453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				4576FCBC28A4232100862D81 /* HomeViewController.swift in Sources */,
 				4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */,
+				453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */,
 				45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
