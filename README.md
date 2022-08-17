@@ -1,11 +1,12 @@
 # Fit-Progress
 
-Inspired by Apple's new framework, Swift Charts, I am building a progress tracking app for weight lifters. 
+As an avid weight lifter, I am always tracking my progress for all of my exercises in my Notes app. It becomes a hassle when I want to view my progress across several months of logs. I decided to make an app to make it more convenient to gauge my gym progress, and will allow me to make changes to my program much more swiftly. I was inspired by Apple's new framework, Charts, to visualize this progress in one place and make sure there is a steady upward trend over time.
 
 ## Design Process
 
-Here is the layout of each screen of Fit Progress that I designed on my iPad using Microsoft OneNote.  
-The goal here was to design a complete MVP of the app.
+Before drawing up my designs, I took a glance at some current fitness apps on the App Store. I wasn't too happy with the visuals of what had found there, so I decided to make it my goal to make the app look like a native iOS app.  
+
+Here is the layout of each screen of Fit Progress that I designed on my iPad using Microsoft OneNote, with the intention of designing a complete MVP of the app.
 
 <details><summary>Click to Expand iPad Sketch</summary>
 
