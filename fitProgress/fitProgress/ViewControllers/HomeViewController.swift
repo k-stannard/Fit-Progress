@@ -20,6 +20,8 @@ class HomeViewController: UIViewController {
         Lifts(name: "Legs", exercises: ["Squats", "Leg Press"])
     ]
     
+    var isWorkoutUpdated: Bool = false
+    
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
     let emptyStateView = EmptyStateView()
 
@@ -38,6 +40,12 @@ class HomeViewController: UIViewController {
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        updateTableWithNewWorkout()
     }
 }
 
@@ -85,6 +93,12 @@ extension HomeViewController {
         ])
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        
+        tableView.setEditing(editing, animated: true)
+    }
+    
     private func checkWorkoutIsEmpty() {
         if lifts.isEmpty {
             emptyStateView.isHidden = false
@@ -101,10 +115,7 @@ extension HomeViewController {
         newView.view.backgroundColor = .white
         
         alert.addAction(UIAlertAction(title: "New Workout", style: .default) { _ in
-            let addWorkoutVC = AddWorkoutViewController()
-            let navController = UINavigationController(rootViewController: addWorkoutVC)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated: true)
+            self.presentAddWorkoutController()
         })
         
         alert.addAction(UIAlertAction(title: "Log Workout", style: .default) { _ in
@@ -117,11 +128,28 @@ extension HomeViewController {
         
         present(alert, animated: true)
     }
+    
+    private func presentAddWorkoutController() {
+        let addWorkoutVC = AddWorkoutViewController()
+        addWorkoutVC.delegate = self
+        let navController = UINavigationController(rootViewController: addWorkoutVC)
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated: true)
+    }
+    
+    func updateTableWithNewWorkout() {
+        if isWorkoutUpdated {
+            let indexSet = IndexSet(integer: lifts.count - 1)
+            tableView.insertSections(indexSet, with: .fade)
+            isWorkoutUpdated.toggle()
+        }
+    }
+}
 
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: true)
-        
-        tableView.setEditing(editing, animated: true)
+extension HomeViewController: AddWorkoutDelegate {
+    func saveNewWorkout(name: String, exercises: [String]) {
+        lifts.append(Lifts(name: name, exercises: exercises))
+        isWorkoutUpdated.toggle()
     }
 }
 
@@ -183,15 +211,6 @@ extension HomeViewController: UITableViewDataSource {
             
             checkWorkoutIsEmpty()
         }
-    }
-    
-    private func addWorkoutToList() {
-        lifts.append(Lifts(name: "New workout", exercises: [""]))
-        
-        let indexSet = IndexSet(integer: lifts.count - 1)
-        tableView.insertSections(indexSet, with: .fade)
-        
-        checkWorkoutIsEmpty()
     }
 }
 

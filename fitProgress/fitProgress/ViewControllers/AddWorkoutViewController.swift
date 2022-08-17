@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol AddWorkoutDelegate: AnyObject {
+    func saveNewWorkout(name: String, exercises: [String])
+}
+
 class AddWorkoutViewController: UIViewController {
+    
+    weak var delegate: AddWorkoutDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +37,7 @@ extension AddWorkoutViewController {
     }
     
     @objc private func handleSave() {
-        print("Save button tapped")
+        self.delegate?.saveNewWorkout(name: "Arms", exercises: ["Hammer Curls", "Cable Curls", "Skullcrusher", "French Press"])
+        dismiss(animated: true)
     }
 }
