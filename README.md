@@ -1,6 +1,6 @@
 # Fit-Progress
 
-As an avid weight lifter, I am always tracking my progress for all of my exercises in my Notes app. It becomes a hassle when I want to view my progress across several months of logs. I decided to make an app to make it more convenient to gauge my gym progress, and will allow me to make changes to my program much more swiftly. I was inspired by Apple's new framework, Charts, to visualize this progress in one place and make sure there is a steady upward trend over time.
+As an avid weight lifter, I am always tracking my progress for all of my exercises in my Notes app. It becomes a hassle when I want to view my progress across several months of logs. I decided to make an app to make it more convenient to gauge my gym progress, and will allow me to make changes to my program much more swiftly. I was inspired by Apple's new framework, Charts, to visualize this progress in one place. This will allow me to be sure there is a steady upward trend in my gym progress over time.
 
 ## Design Process
 
