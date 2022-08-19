@@ -27,6 +27,7 @@ class AddWorkoutViewController: UIViewController {
         configureNavigationBar()
         configureTableView()
         layoutTableView()
+        configureFooterView()
     }
 }
 
@@ -55,6 +56,17 @@ extension AddWorkoutViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    private func configureFooterView() {
+        let footerView = AddRowFooterView()
+        footerView.addRowButton.addTarget(self, action: #selector(handleAddRow), for: .touchUpInside)
+        footerView.frame.size.height = 45
+        self.tableView.tableFooterView = footerView
+    }
+    
+    @objc private func handleAddRow() {
+        print("Add row button tapped")
     }
     
     @objc private func handleCancel() {
