@@ -9,15 +9,17 @@ import UIKit
 
 struct Lifts: Hashable {
     var name: String
-    var exercises: [String]
+    var exercises: Exercises
+}
+
+struct Exercises: Hashable {
+    var name: [String]
 }
 
 class HomeViewController: UIViewController {
         
     var lifts: [Lifts] = [
-        Lifts(name: "Push", exercises: ["Bench", "Cable Flies", "Tricep Pushdown"]),
-        Lifts(name: "Pull", exercises: ["Deadlift", "Barbell Rows", "Lat Pulldown", "Hammer Curls"]),
-        Lifts(name: "Legs", exercises: ["Squats", "Leg Press"])
+        Lifts(name: "Push", exercises: Exercises(name: ["Bench", "Cable Fly", "Tricep Pushdown"]))
     ]
     
     var isWorkoutUpdated: Bool = false
@@ -138,6 +140,7 @@ extension HomeViewController {
     }
     
     func updateTableWithNewWorkout() {
+        checkWorkoutIsEmpty()
         if isWorkoutUpdated {
             let indexSet = IndexSet(integer: lifts.count - 1)
             tableView.insertSections(indexSet, with: .fade)
@@ -147,8 +150,8 @@ extension HomeViewController {
 }
 
 extension HomeViewController: AddWorkoutDelegate {
-    func saveNewWorkout(name: String, exercises: [String]) {
-        lifts.append(Lifts(name: name, exercises: exercises))
+    func saveNewWorkout(with workout: Lifts) {
+        lifts.append(workout)
         isWorkoutUpdated.toggle()
     }
 }
@@ -161,13 +164,13 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        lifts[section].exercises.count
+        lifts[section].exercises.name.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = lifts[indexPath.section].exercises[indexPath.row]
+        cell.textLabel?.text = lifts[indexPath.section].exercises.name[indexPath.row]
         return cell
     }
     
@@ -186,11 +189,11 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     private func deleteExerciseFromWorkout(with indexPath: IndexPath) {
-        lifts[indexPath.section].exercises.remove(at: indexPath.row)
+        lifts[indexPath.section].exercises.name.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         
         tableView.performBatchUpdates {
-            if lifts[indexPath.section].exercises.isEmpty {
+            if lifts[indexPath.section].exercises.name.isEmpty {
                 let currentSection = indexPath.section
                 let nextSection = currentSection + 1
                 
