@@ -16,6 +16,7 @@ class AddWorkoutViewController: UIViewController {
     weak var delegate: AddWorkoutDelegate?
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    var numberOfRows = 5
 
     var name: String = ""
     var exercises: Exercises = Exercises(name: [])
@@ -66,7 +67,11 @@ extension AddWorkoutViewController {
     }
     
     @objc private func handleAddRow() {
-        print("Add row button tapped")
+        tableView.beginUpdates()
+        let indexPath = IndexPath(row: numberOfRows, section: 1)
+        tableView.insertRows(at: [indexPath], with: .automatic)
+        numberOfRows += 1
+        tableView.endUpdates()
     }
     
     @objc private func handleCancel() {
@@ -92,7 +97,7 @@ extension AddWorkoutViewController: UITableViewDataSource {
             return 1
         }
         
-        return 5
+        return numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
