@@ -41,17 +41,24 @@ struct CoreDataManager {
         return nil
     }
     
-    func fetchExercise() -> [Exercise]? {
+    func deleteExercise(exercise: Exercise) {
         let context = container.viewContext
-        let request = NSFetchRequest<Exercise>(entityName: "Exercise")
+        context.delete(exercise)
         
         do {
-            let exercise = try context.fetch(request)
-            return exercise
+            try context.save()
         } catch let error {
-            print("Failed to fetch workout: \(error)")
+            print("Failed to delete: \(error)")
         }
-        
-        return nil
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error occurred while saving: \(error)")
+            }
+        }
     }
 }

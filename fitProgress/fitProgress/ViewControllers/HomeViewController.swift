@@ -10,10 +10,21 @@ import CoreData
 
 class HomeViewController: UIViewController {
     
-    var fetchedResultsController: NSFetchedResultsController<Exercise>!
-    let context = CoreDataManager.shared.container.viewContext
+    lazy var fetchedResultsController: NSFetchedResultsController<Exercise> = {
+        let request = NSFetchRequest<Exercise>(entityName: "Exercise")
+        let createdSort = NSSortDescriptor(key: "createdAt", ascending: true)
+        
+        request.sortDescriptors = [createdSort]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
+                                                              managedObjectContext: context,
+                                                              sectionNameKeyPath: "workout",
+                                                              cacheName: nil)
+        fetchedResultsController.delegate = self
+        return fetchedResultsController
+    }()
     
-    var isWorkoutUpdated: Bool = false
+    let context = CoreDataManager.shared.container.viewContext
     
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
     let emptyStateView = EmptyStateView()
@@ -25,20 +36,7 @@ class HomeViewController: UIViewController {
         configureTableView()
         configureEmptyStateView()
         loadSavedData()
-        getCoreDataDBPath()
     }
-    
-    func getCoreDataDBPath() {
-            let path = FileManager
-                .default
-                .urls(for: .applicationSupportDirectory, in: .userDomainMask)
-                .last?
-                .absoluteString
-                .replacingOccurrences(of: "file://", with: "")
-                .removingPercentEncoding
-
-            print("Core Data DB Path :: \(path ?? "Not found")")
-        }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,10 +45,6 @@ class HomeViewController: UIViewController {
         
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
-        }
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
         }
     }
 }
@@ -112,6 +106,8 @@ extension HomeViewController {
         } else {
             emptyStateView.isHidden = true
         }
+        
+        DispatchQueue.main.async { self.tableView.reloadData() }
     }
     
     @objc private func handleLogAlert() {
@@ -149,26 +145,12 @@ extension HomeViewController: AddWorkoutDelegate {
     
     func saveNewWorkout(with workout: String, exercise: String) {
         CoreDataManager.shared.createExercise(workout: workout, name: exercise)
-        isWorkoutUpdated.toggle()
     }
 }
 
 extension HomeViewController: NSFetchedResultsControllerDelegate {
     
     private func loadSavedData() {
-        if fetchedResultsController == nil {
-            let request = NSFetchRequest<Exercise>(entityName: "Exercise")
-            let createdSort = NSSortDescriptor(key: "createdAt", ascending: true)
-            
-            request.sortDescriptors = [createdSort]
-            
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                                  managedObjectContext: context,
-                                                                  sectionNameKeyPath: "workout",
-                                                                  cacheName: nil)
-            fetchedResultsController.delegate = self
-        }
-        
         do {
             try fetchedResultsController.performFetch()
             DispatchQueue.main.async { self.tableView.reloadData() }
@@ -179,22 +161,20 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         if let indexPath = indexPath, let newIndexPath = newIndexPath {
-            tableView.performBatchUpdates {
+            tableView.beginUpdates()
                 switch type {
                 case .insert:
-                    tableView.insertRows(at: [newIndexPath], with: .fade)
-                    self.tableView.reloadData()
+                    self.tableView.insertRows(at: [newIndexPath], with: .fade)
                 case .delete:
-                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
                 case .update:
-                    tableView.reloadRows(at: [indexPath], with: .fade)
+                    self.tableView.reloadRows(at: [indexPath], with: .fade)
                 case .move:
-                    tableView.moveRow(at: indexPath, to: newIndexPath)
+                    self.tableView.moveRow(at: indexPath, to: newIndexPath)
                 default:
                     break
                 }
-            }
-
+            tableView.endUpdates()
         }
     }
 }
@@ -223,12 +203,22 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionInfo = fetchedResultsController!.sections!
+        let sectionInfo = fetchedResultsController.sections!
         return sectionInfo[section].name
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let exercise = self.fetchedResultsController.object(at: indexPath)
+            CoreDataManager.shared.container.viewContext.delete(exercise)
+            CoreDataManager.shared.saveContext()
+            
+            checkWorkoutIsEmpty()
+        }
     }
 }
 
