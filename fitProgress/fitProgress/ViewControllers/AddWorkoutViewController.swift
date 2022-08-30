@@ -8,18 +8,19 @@
 import UIKit
 
 protocol AddWorkoutDelegate: AnyObject {
-    func saveNewWorkout(with workout: Lifts)
+    func saveNewWorkout(with workout: String, exercise: String)
 }
 
 class AddWorkoutViewController: UIViewController {
     
+    let dataManager = CoreDataManager.shared
     weak var delegate: AddWorkoutDelegate?
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     var numberOfRows = 5
 
     var name: String = ""
-    var exercises: Exercises = Exercises(name: [])
+    var exercises: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,8 +81,11 @@ extension AddWorkoutViewController {
     
     @objc private func handleSave() {
         view.endEditing(true)
-        let workout = Lifts(name: name, exercises: exercises)
-        self.delegate?.saveNewWorkout(with: workout)
+        self.exercises.forEach { exercise in
+            print("Adding exercise to workout: \(exercise)")
+            self.delegate?.saveNewWorkout(with: self.name, exercise: exercise)
+        }
+        
         dismiss(animated: true)
     }
 }
@@ -131,8 +135,8 @@ extension AddWorkoutViewController: UITextFieldDelegate {
         default:
             let exercise = textField.text!
             if !textField.isEditing && textField.text != "" {
-                if !exercises.name.contains(exercise) {
-                    exercises.name.append(exercise)
+                if !exercises.contains(exercise) {
+                    exercises.append(exercise)
                 }
             }
         }

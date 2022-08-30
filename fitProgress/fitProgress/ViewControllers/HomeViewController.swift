@@ -6,21 +6,12 @@
 //
 
 import UIKit
-
-struct Lifts: Hashable {
-    var name: String
-    var exercises: Exercises
-}
-
-struct Exercises: Hashable {
-    var name: [String]
-}
+import CoreData
 
 class HomeViewController: UIViewController {
-        
-    var lifts: [Lifts] = [
-        Lifts(name: "Push", exercises: Exercises(name: ["Bench", "Cable Fly", "Tricep Pushdown"]))
-    ]
+    
+    var fetchedResultsController: NSFetchedResultsController<Exercise>!
+    let context = CoreDataManager.shared.container.viewContext
     
     var isWorkoutUpdated: Bool = false
     
@@ -33,21 +24,34 @@ class HomeViewController: UIViewController {
         configureNavigationBar()
         configureTableView()
         configureEmptyStateView()
-        checkWorkoutIsEmpty()
+        loadSavedData()
+        getCoreDataDBPath()
     }
+    
+    func getCoreDataDBPath() {
+            let path = FileManager
+                .default
+                .urls(for: .applicationSupportDirectory, in: .userDomainMask)
+                .last?
+                .absoluteString
+                .replacingOccurrences(of: "file://", with: "")
+                .removingPercentEncoding
+
+            print("Core Data DB Path :: \(path ?? "Not found")")
+        }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        checkWorkoutIsEmpty()
+        
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        updateTableWithNewWorkout()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -102,7 +106,8 @@ extension HomeViewController {
     }
     
     private func checkWorkoutIsEmpty() {
-        if lifts.isEmpty {
+        let objects = fetchedResultsController.fetchedObjects?.count
+        if objects == 0 {
             emptyStateView.isHidden = false
         } else {
             emptyStateView.isHidden = true
@@ -138,21 +143,59 @@ extension HomeViewController {
         navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true)
     }
-    
-    func updateTableWithNewWorkout() {
-        checkWorkoutIsEmpty()
-        if isWorkoutUpdated {
-            let indexSet = IndexSet(integer: lifts.count - 1)
-            tableView.insertSections(indexSet, with: .fade)
-            isWorkoutUpdated.toggle()
-        }
-    }
 }
 
 extension HomeViewController: AddWorkoutDelegate {
-    func saveNewWorkout(with workout: Lifts) {
-        lifts.append(workout)
+    
+    func saveNewWorkout(with workout: String, exercise: String) {
+        CoreDataManager.shared.createExercise(workout: workout, name: exercise)
         isWorkoutUpdated.toggle()
+    }
+}
+
+extension HomeViewController: NSFetchedResultsControllerDelegate {
+    
+    private func loadSavedData() {
+        if fetchedResultsController == nil {
+            let request = NSFetchRequest<Exercise>(entityName: "Exercise")
+            let createdSort = NSSortDescriptor(key: "createdAt", ascending: true)
+            
+            request.sortDescriptors = [createdSort]
+            
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
+                                                                  managedObjectContext: context,
+                                                                  sectionNameKeyPath: "workout",
+                                                                  cacheName: nil)
+            fetchedResultsController.delegate = self
+        }
+        
+        do {
+            try fetchedResultsController.performFetch()
+            DispatchQueue.main.async { self.tableView.reloadData() }
+        } catch let error {
+            print("failed to load saved data: \(error)")
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if let indexPath = indexPath, let newIndexPath = newIndexPath {
+            tableView.performBatchUpdates {
+                switch type {
+                case .insert:
+                    tableView.insertRows(at: [newIndexPath], with: .fade)
+                    self.tableView.reloadData()
+                case .delete:
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                case .update:
+                    tableView.reloadRows(at: [indexPath], with: .fade)
+                case .move:
+                    tableView.moveRow(at: indexPath, to: newIndexPath)
+                default:
+                    break
+                }
+            }
+
+        }
     }
 }
 
@@ -160,60 +203,32 @@ extension HomeViewController: AddWorkoutDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        lifts.count
+        fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        lifts[section].exercises.name.count
+        let sections = fetchedResultsController.sections![section]
+        let objects = sections.numberOfObjects
+        return objects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = lifts[indexPath.section].exercises.name[indexPath.row]
+        
+        let exercise = fetchedResultsController.object(at: indexPath)
+        cell.textLabel?.text = exercise.name
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        lifts[section].name
+        let sectionInfo = fetchedResultsController!.sections!
+        return sectionInfo[section].name
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            deleteExerciseFromWorkout(with: indexPath)
-        }
-    }
-    
-    private func deleteExerciseFromWorkout(with indexPath: IndexPath) {
-        lifts[indexPath.section].exercises.name.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
-        
-        tableView.performBatchUpdates {
-            if lifts[indexPath.section].exercises.name.isEmpty {
-                let currentSection = indexPath.section
-                let nextSection = currentSection + 1
-                
-                if lifts[indexPath.section] != lifts.last {
-                    
-                    lifts.remove(at: indexPath.section)
-                    
-                    let indexSet = IndexSet(integer: indexPath.section)
-                    tableView.deleteSections(indexSet, with: .fade)
-                    tableView.moveSection(nextSection, toSection: currentSection)
-                } else {
-                    lifts.remove(at: indexPath.section)
-                    
-                    let indexSet = IndexSet(integer: indexPath.section)
-                    tableView.deleteSections(indexSet, with: .fade)
-                }
-            }
-            
-            checkWorkoutIsEmpty()
-        }
     }
 }
 
