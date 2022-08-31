@@ -116,15 +116,12 @@ extension HomeViewController {
         let message = "Would you like to add a new workout or log your workout weight?"
         let alert = UIAlertController(title: "Log Alert", message: message, preferredStyle: .alert)
         
-        let newView = UIViewController()
-        newView.view.backgroundColor = .white
-        
         alert.addAction(UIAlertAction(title: "New Workout", style: .default) { _ in
             self.presentAddWorkoutController()
         })
         
         alert.addAction(UIAlertAction(title: "Log Workout", style: .default) { _ in
-            self.present(newView, animated: true)
+            self.presentLogWorkoutController()
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -138,6 +135,13 @@ extension HomeViewController {
         let addWorkoutVC = AddWorkoutViewController()
         addWorkoutVC.delegate = self
         let navController = UINavigationController(rootViewController: addWorkoutVC)
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated: true)
+    }
+    
+    private func presentLogWorkoutController() {
+        let logWorkoutVC = LogWorkoutViewController()
+        let navController = UINavigationController(rootViewController: logWorkoutVC)
         navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true)
     }

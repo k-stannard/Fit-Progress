@@ -20,6 +20,7 @@
 		458F747B28B95BEA0098BA0E /* Exercise.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 458F747928B95BEA0098BA0E /* Exercise.xcdatamodeld */; };
 		458F747E28B95C0F0098BA0E /* Exercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F747C28B95C0E0098BA0E /* Exercise+CoreDataClass.swift */; };
 		458F747F28B95C0F0098BA0E /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F747D28B95C0E0098BA0E /* Exercise+CoreDataProperties.swift */; };
+		458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		458F747A28B95BEA0098BA0E /* Exercise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Exercise.xcdatamodel; sourceTree = "<group>"; };
 		458F747C28B95C0E0098BA0E /* Exercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		458F747D28B95C0E0098BA0E /* Exercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWorkoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			children = (
 				4576FCBB28A4232100862D81 /* HomeViewController.swift */,
 				453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */,
+				458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */,
 				453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */,
 				458F747F28B95C0F0098BA0E /* Exercise+CoreDataProperties.swift in Sources */,
+				458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */,
 				456938CA28AC73C800DA0307 /* AddWorkoutTextField.swift in Sources */,
 				458F747E28B95C0F0098BA0E /* Exercise+CoreDataClass.swift in Sources */,
 				458F747828B9325D0098BA0E /* CoreDataManager.swift in Sources */,
