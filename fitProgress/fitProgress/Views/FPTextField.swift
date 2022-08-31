@@ -1,5 +1,5 @@
 //
-//  AddWorkoutTextField.swift
+//  FPTextField.swift
 //  fitProgress
 //
 //  Created by Koty Stannard on 8/16/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddWorkoutTextField: UITextField {
+class FPTextField: UITextField {
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         bounds.insetBy(dx: 24, dy: 0)

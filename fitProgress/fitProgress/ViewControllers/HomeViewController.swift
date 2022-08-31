@@ -51,6 +51,7 @@ class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - Configuration & Layout Methods
 extension HomeViewController {
     
     private func configureNavigationBar() {
@@ -111,6 +112,10 @@ extension HomeViewController {
         
         DispatchQueue.main.async { self.tableView.reloadData() }
     }
+}
+
+// MARK: - Button Action Methods
+extension HomeViewController {
     
     @objc private func handleLogAlert() {
         let message = "Would you like to add a new workout or log your workout weight?"
@@ -147,6 +152,7 @@ extension HomeViewController {
     }
 }
 
+// MARK: - AddWorkoutDelegate Methods
 extension HomeViewController: AddWorkoutDelegate {
     
     func saveNewWorkout(with workout: String, exercise: String) {
@@ -154,6 +160,7 @@ extension HomeViewController: AddWorkoutDelegate {
     }
 }
 
+// MARK: - NSFetchedResultsController Methods
 extension HomeViewController: NSFetchedResultsControllerDelegate {
     
     private func loadSavedData() {
@@ -185,7 +192,7 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource Methods
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -228,7 +235,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate Methods
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

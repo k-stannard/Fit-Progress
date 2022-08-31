@@ -11,7 +11,7 @@ class AddWorkoutTableViewCell: UITableViewCell {
     
     static let reuseid = "addWorkoutCell"
     
-    let textField = AddWorkoutTextField()
+    let textField = FPTextField()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

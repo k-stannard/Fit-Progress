@@ -11,7 +11,7 @@
 		45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45204A8228AABE5F00BD7099 /* EmptyStateView.swift */; };
 		453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */; };
 		456938C828AC70FF00DA0307 /* AddWorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */; };
-		456938CA28AC73C800DA0307 /* AddWorkoutTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456938C928AC73C800DA0307 /* AddWorkoutTextField.swift */; };
+		456938CA28AC73C800DA0307 /* FPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456938C928AC73C800DA0307 /* FPTextField.swift */; };
 		4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FCB728A4232100862D81 /* AppDelegate.swift */; };
 		4576FCBC28A4232100862D81 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FCBB28A4232100862D81 /* HomeViewController.swift */; };
 		4576FCC128A4232300862D81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4576FCC028A4232300862D81 /* Assets.xcassets */; };
@@ -28,7 +28,7 @@
 		45204A8228AABE5F00BD7099 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutViewController.swift; sourceTree = "<group>"; };
 		456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutTableViewCell.swift; sourceTree = "<group>"; };
-		456938C928AC73C800DA0307 /* AddWorkoutTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutTextField.swift; sourceTree = "<group>"; };
+		456938C928AC73C800DA0307 /* FPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTextField.swift; sourceTree = "<group>"; };
 		4576FCB428A4232100862D81 /* fitProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4576FCB728A4232100862D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4576FCBB28A4232100862D81 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -56,10 +56,10 @@
 		45204A7C28A573FC00BD7099 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				45204A8228AABE5F00BD7099 /* EmptyStateView.swift */,
-				456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */,
-				456938C928AC73C800DA0307 /* AddWorkoutTextField.swift */,
-				4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */,
+				458F748228BFCD710098BA0E /* HomeViews */,
+				458F748328BFCD7F0098BA0E /* AddWorkoutViews */,
+				458F748428BFCD970098BA0E /* LogWorkoutViews */,
+				456938C928AC73C800DA0307 /* FPTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -119,6 +119,30 @@
 				4576FCC528A4232300862D81 /* Info.plist */,
 			);
 			path = fitProgress;
+			sourceTree = "<group>";
+		};
+		458F748228BFCD710098BA0E /* HomeViews */ = {
+			isa = PBXGroup;
+			children = (
+				45204A8228AABE5F00BD7099 /* EmptyStateView.swift */,
+			);
+			path = HomeViews;
+			sourceTree = "<group>";
+		};
+		458F748328BFCD7F0098BA0E /* AddWorkoutViews */ = {
+			isa = PBXGroup;
+			children = (
+				456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */,
+				4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */,
+			);
+			path = AddWorkoutViews;
+			sourceTree = "<group>";
+		};
+		458F748428BFCD970098BA0E /* LogWorkoutViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LogWorkoutViews;
 			sourceTree = "<group>";
 		};
 		45B945D628A56BAE0073E5EC /* ViewControllers */ = {
@@ -228,7 +252,7 @@
 				453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */,
 				458F747F28B95C0F0098BA0E /* Exercise+CoreDataProperties.swift in Sources */,
 				458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */,
-				456938CA28AC73C800DA0307 /* AddWorkoutTextField.swift in Sources */,
+				456938CA28AC73C800DA0307 /* FPTextField.swift in Sources */,
 				458F747E28B95C0F0098BA0E /* Exercise+CoreDataClass.swift in Sources */,
 				458F747828B9325D0098BA0E /* CoreDataManager.swift in Sources */,
 				45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */,

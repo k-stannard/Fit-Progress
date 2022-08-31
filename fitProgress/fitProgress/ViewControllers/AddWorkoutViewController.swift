@@ -33,6 +33,7 @@ class AddWorkoutViewController: UIViewController {
     }
 }
 
+// MARK: - Configuration & Layout Methods
 extension AddWorkoutViewController {
     
     private func configureNavigationBar() {
@@ -66,6 +67,10 @@ extension AddWorkoutViewController {
         footerView.frame.size.height = 45
         self.tableView.tableFooterView = footerView
     }
+}
+
+// MARK: - Button Action Methods
+extension AddWorkoutViewController {
     
     @objc private func handleAddRow() {
         tableView.beginUpdates()
@@ -90,6 +95,7 @@ extension AddWorkoutViewController {
     }
 }
 
+// MARK: - TableViewDataSource Methods
 extension AddWorkoutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -126,6 +132,7 @@ extension AddWorkoutViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - TextFieldDelegate Methods
 extension AddWorkoutViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
