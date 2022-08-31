@@ -16,10 +16,12 @@ class HomeViewController: UIViewController {
         
         request.sortDescriptors = [createdSort]
         
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: context,
-                                                              sectionNameKeyPath: "workout",
-                                                              cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: context,
+            sectionNameKeyPath: "workout",
+            cacheName: nil
+        )
         fetchedResultsController.delegate = self
         return fetchedResultsController
     }()
@@ -155,7 +157,7 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
             try fetchedResultsController.performFetch()
             DispatchQueue.main.async { self.tableView.reloadData() }
         } catch let error {
-            print("failed to load saved data: \(error)")
+            print("Failed to load saved data: \(error)")
         }
     }
     
@@ -194,10 +196,10 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.accessoryType = .disclosureIndicator
         
         let exercise = fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = exercise.name
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }
