@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4515EC3628B00B8800FFE5E3 /* AddRowFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */; };
 		45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45204A8228AABE5F00BD7099 /* EmptyStateView.swift */; };
+		4528964028C26F4C004A1C0A /* SelectWorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528963F28C26F4C004A1C0A /* SelectWorkoutCell.swift */; };
+		4528964228C8E370004A1C0A /* SelectWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528964128C8E370004A1C0A /* SelectWorkoutViewController.swift */; };
 		453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */; };
 		456938C828AC70FF00DA0307 /* AddWorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */; };
 		456938CA28AC73C800DA0307 /* FPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456938C928AC73C800DA0307 /* FPTextField.swift */; };
@@ -21,11 +23,14 @@
 		458F747E28B95C0F0098BA0E /* Exercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F747C28B95C0E0098BA0E /* Exercise+CoreDataClass.swift */; };
 		458F747F28B95C0F0098BA0E /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F747D28B95C0E0098BA0E /* Exercise+CoreDataProperties.swift */; };
 		458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */; };
+		458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRowFooterView.swift; sourceTree = "<group>"; };
 		45204A8228AABE5F00BD7099 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		4528963F28C26F4C004A1C0A /* SelectWorkoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkoutCell.swift; sourceTree = "<group>"; };
+		4528964128C8E370004A1C0A /* SelectWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkoutViewController.swift; sourceTree = "<group>"; };
 		453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutViewController.swift; sourceTree = "<group>"; };
 		456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		456938C928AC73C800DA0307 /* FPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPTextField.swift; sourceTree = "<group>"; };
@@ -40,6 +45,7 @@
 		458F747C28B95C0E0098BA0E /* Exercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		458F747D28B95C0E0098BA0E /* Exercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWorkoutViewController.swift; sourceTree = "<group>"; };
+		458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogExerciseCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,8 @@
 		458F748428BFCD970098BA0E /* LogWorkoutViews */ = {
 			isa = PBXGroup;
 			children = (
+				4528963F28C26F4C004A1C0A /* SelectWorkoutCell.swift */,
+				458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */,
 			);
 			path = LogWorkoutViews;
 			sourceTree = "<group>";
@@ -151,6 +159,7 @@
 				4576FCBB28A4232100862D81 /* HomeViewController.swift */,
 				453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */,
 				458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */,
+				4528964128C8E370004A1C0A /* SelectWorkoutViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -252,11 +261,14 @@
 				453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */,
 				458F747F28B95C0F0098BA0E /* Exercise+CoreDataProperties.swift in Sources */,
 				458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */,
+				4528964228C8E370004A1C0A /* SelectWorkoutViewController.swift in Sources */,
 				456938CA28AC73C800DA0307 /* FPTextField.swift in Sources */,
+				4528964028C26F4C004A1C0A /* SelectWorkoutCell.swift in Sources */,
 				458F747E28B95C0F0098BA0E /* Exercise+CoreDataClass.swift in Sources */,
 				458F747828B9325D0098BA0E /* CoreDataManager.swift in Sources */,
 				45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */,
 				458F747B28B95BEA0098BA0E /* Exercise.xcdatamodeld in Sources */,
+				458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */,
 				456938C828AC70FF00DA0307 /* AddWorkoutTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
