@@ -19,6 +19,14 @@ class LogWorkoutViewController: UIViewController {
         configureNavigationBar()
         configureTableView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let index = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: index, animated: true)
+        }
+    }
 }
 
 // MARK: - Configuration & Layout Methods
@@ -81,16 +89,15 @@ extension LogWorkoutViewController: UITableViewDataSource {
         case 0:
             let cell = SelectWorkoutCell(style: .value1, reuseIdentifier: SelectWorkoutCell.reuseId)
             cell.accessoryType = .disclosureIndicator
-            
             cell.detailTextLabel?.text = "Chest"
+            
             return cell
         case 1:
             let cell = LogExerciseCell(style: .default, reuseIdentifier: LogExerciseCell.reuseid)
             let content = text[indexPath.row]
             cell.nameLabel.text = content
-            cell.weightTextField.delegate = self
-            cell.setsTextField.delegate = self
-            cell.repsTextField.delegate = self
+            cell.configureCellTextFields(with: self, indexPath: indexPath)
+            
             return cell
         default:
             return UITableViewCell(style: .default, reuseIdentifier: "cell")
@@ -102,6 +109,7 @@ extension LogWorkoutViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate Methods
 extension LogWorkoutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -111,12 +119,18 @@ extension LogWorkoutViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITextFieldDelegate Methods
 extension LogWorkoutViewController: UITextFieldDelegate {
     
+    // Limit # of characters user can enter to 3 max
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         return updatedText.count <= 3
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print(textField.tag)
     }
 }

@@ -26,6 +26,20 @@
 		458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		45E2DD6528C8EFDF002C7304 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRowFooterView.swift; sourceTree = "<group>"; };
 		45204A8228AABE5F00BD7099 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
@@ -177,6 +191,7 @@
 				4576FCCB28A42DC500862D81 /* ShellScript */,
 			);
 			buildRules = (
+				45E2DD6528C8EFDF002C7304 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);

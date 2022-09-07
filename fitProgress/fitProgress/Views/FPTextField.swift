@@ -9,34 +9,24 @@ import UIKit
 
 class FPTextField: UITextField {
     
-    var useTextRect = true
+    var rectBounds: CGFloat = 24
     
-    convenience init(placeholder: String, alignment: NSTextAlignment, useTextRect: Bool) {
+    convenience init(placeholder: String, alignment: NSTextAlignment, rectBounds: CGFloat) {
         self.init(frame: .zero)
         
-        self.useTextRect = useTextRect
         self.textAlignment = alignment
         self.placeholder = placeholder
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 8
-//        self.layer.borderWidth = borderWidth
-//        self.layer.cornerRadius = cornerRadius
+        self.rectBounds = rectBounds
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        if useTextRect {
-            return bounds.insetBy(dx: 24, dy: 0)
-        }
-        
-        return bounds.insetBy(dx: 0, dy: 0)
+        bounds.insetBy(dx: rectBounds, dy: 0)
     }
 
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        if useTextRect {
-            return bounds.insetBy(dx: 24, dy: 0)
-        }
-        
-        return bounds.insetBy(dx: 0, dy: 0)
+        bounds.insetBy(dx: rectBounds, dy: 0)
     }
     
     override var intrinsicContentSize: CGSize {

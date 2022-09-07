@@ -12,9 +12,9 @@ class LogExerciseCell: UITableViewCell {
     static let reuseid = "LogExerciseCell"
     
     let nameLabel = UILabel()
-    let weightTextField = FPTextField(placeholder: "Lb", alignment: .center, useTextRect: false)
-    let setsTextField = FPTextField(placeholder: "Sets", alignment: .center, useTextRect: false)
-    let repsTextField = FPTextField(placeholder: "Reps", alignment: .center, useTextRect: false)
+    let weightTextField = FPTextField(placeholder: "Lb", alignment: .center, rectBounds: 0)
+    let setsTextField = FPTextField(placeholder: "Sets", alignment: .center, rectBounds: 2)
+    let repsTextField = FPTextField(placeholder: "Reps", alignment: .center, rectBounds: 4)
 
     private let textFieldStackView = UIStackView()
     
@@ -41,10 +41,11 @@ extension LogExerciseCell {
     }
     
     func layout() {
-        [weightTextField, setsTextField, repsTextField].forEach { view in
-            view.font = UIFont.systemFont(ofSize: 15)
-            textFieldStackView.addArrangedSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
+        [weightTextField, setsTextField, repsTextField].forEach { textField in
+            textField.font = UIFont.systemFont(ofSize: 15)
+            textField.keyboardType = .numberPad
+            textFieldStackView.addArrangedSubview(textField)
+            textField.translatesAutoresizingMaskIntoConstraints = false
         }
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -63,5 +64,15 @@ extension LogExerciseCell {
             textFieldStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             textFieldStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
+    }
+    
+    func configureCellTextFields(with delegate: UITextFieldDelegate, indexPath: IndexPath) {
+        weightTextField.delegate = delegate
+        setsTextField.delegate = delegate
+        repsTextField.delegate = delegate
+        
+        weightTextField.tag = 10 * indexPath.row
+        setsTextField.tag = 10 * indexPath.row + 1
+        repsTextField.tag = 10 * indexPath.row + 2
     }
 }
