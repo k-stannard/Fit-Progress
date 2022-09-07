@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import CoreData
 
 class SelectWorkoutViewController: UIViewController {
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    
+    let context = CoreDataManager.shared.container.viewContext
+    
+    var workouts = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,9 +22,11 @@ class SelectWorkoutViewController: UIViewController {
         view.backgroundColor = .systemBackground
         configureTableView()
         layoutTableView()
+        loadFetchedData()
     }
 }
 
+// MARK: - Configuration & Layout Methods
 extension SelectWorkoutViewController {
     
     private func configureTableView() {
@@ -43,6 +50,27 @@ extension SelectWorkoutViewController {
     }
 }
 
+// MARK: - CoreData Methods
+extension SelectWorkoutViewController {
+    
+    private func loadFetchedData() {
+        let attributeToFetch = "workout"
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Exercise")
+        request.resultType = .dictionaryResultType
+        request.returnsDistinctResults = true
+        request.propertiesToFetch = [attributeToFetch]
+        
+        do {
+            if let result = try context.fetch(request) as? [[String: String]] {
+                workouts = result.compactMap { $0[attributeToFetch] }
+            }
+        } catch let error {
+            print("Could not fetch: \(error)")
+        }
+    }
+}
+
+// MARK: - UITableViewDataSource Methods
 extension SelectWorkoutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -50,15 +78,18 @@ extension SelectWorkoutViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        workouts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        let exercise = workouts[indexPath.row]
+        cell.textLabel?.text = exercise
         return cell
     }
 }
 
+// MARK: - UITableViewDelegate Methods
 extension SelectWorkoutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
