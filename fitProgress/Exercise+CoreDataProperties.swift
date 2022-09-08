@@ -18,6 +18,7 @@ extension Exercise {
     @NSManaged public var workout: String
     @NSManaged public var name: String
     @NSManaged public var createdAt: Date
+    @NSManaged public var id: UUID
 }
 
 extension Exercise : Identifiable {

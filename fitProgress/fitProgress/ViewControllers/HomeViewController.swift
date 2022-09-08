@@ -12,9 +12,11 @@ class HomeViewController: UIViewController {
     
     lazy var fetchedResultsController: NSFetchedResultsController<Exercise> = {
         let request = NSFetchRequest<Exercise>(entityName: "Exercise")
+        let workoutSort = NSSortDescriptor(key: "workout", ascending: false)
         let createdSort = NSSortDescriptor(key: "createdAt", ascending: true)
+        let uuidSort = NSSortDescriptor(key: "id", ascending: true)
         
-        request.sortDescriptors = [createdSort]
+        request.sortDescriptors = [workoutSort, createdSort, uuidSort]
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,

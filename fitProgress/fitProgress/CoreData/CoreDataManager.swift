@@ -30,6 +30,7 @@ struct CoreDataManager {
         exercise.workout = workout
         exercise.name = name
         exercise.createdAt = Date()
+        exercise.id = UUID()
         
         do {
             try context.save()
