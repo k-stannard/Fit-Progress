@@ -9,7 +9,10 @@ import UIKit
 
 class LogWorkoutViewController: UIViewController {
     
+    let context = CoreDataManager.shared.container.viewContext
+    
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    var selectedWorkout: String?
     let text = ["Bench Press", "Overhead Press", "Incline Cables", "Dips", "Tricep Pushdown"]
     
     override func viewDidLoad() {
@@ -26,6 +29,8 @@ class LogWorkoutViewController: UIViewController {
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+        
+        DispatchQueue.main.async { self.tableView.reloadData() }
     }
 }
 
@@ -61,6 +66,14 @@ extension LogWorkoutViewController {
     }
 }
 
+// MARK: - CoreData Methods
+extension LogWorkoutViewController:  SelectWorkoutDelegate {
+    
+    func fetchExercises(from workout: String) {
+        selectedWorkout = workout
+    }
+}
+
 // MARK: - Button Action Methods
 extension LogWorkoutViewController {
     
@@ -89,7 +102,7 @@ extension LogWorkoutViewController: UITableViewDataSource {
         case 0:
             let cell = SelectWorkoutCell(style: .value1, reuseIdentifier: SelectWorkoutCell.reuseId)
             cell.accessoryType = .disclosureIndicator
-            cell.detailTextLabel?.text = "Chest"
+            cell.detailTextLabel?.text = selectedWorkout
             
             return cell
         case 1:
@@ -114,7 +127,9 @@ extension LogWorkoutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            navigationController?.pushViewController(SelectWorkoutViewController(), animated: true)
+            let selectWorkoutVC = SelectWorkoutViewController()
+            selectWorkoutVC.delegate = self
+            navigationController?.pushViewController(selectWorkoutVC, animated: true)
         }
     }
 }

@@ -8,11 +8,16 @@
 import UIKit
 import CoreData
 
+protocol SelectWorkoutDelegate: AnyObject {
+    func fetchExercises(from workout: String)
+}
+
 class SelectWorkoutViewController: UIViewController {
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     let context = CoreDataManager.shared.container.viewContext
+    weak var delegate: SelectWorkoutDelegate?
     
     var workouts = [String]()
     
@@ -93,6 +98,8 @@ extension SelectWorkoutViewController: UITableViewDataSource {
 extension SelectWorkoutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let workout = workouts[indexPath.row]
+        self.delegate?.fetchExercises(from: workout)
+        navigationController?.popViewController(animated: true)
     }
 }
