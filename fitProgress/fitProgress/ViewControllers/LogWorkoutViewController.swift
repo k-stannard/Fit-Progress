@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class LogWorkoutViewController: UIViewController {
     
@@ -13,7 +14,7 @@ class LogWorkoutViewController: UIViewController {
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     var selectedWorkout: String?
-    let text = ["Bench Press", "Overhead Press", "Incline Cables", "Dips", "Tricep Pushdown"]
+    var exercises = [Exercise]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,11 +67,28 @@ extension LogWorkoutViewController {
     }
 }
 
-// MARK: - CoreData Methods
+// MARK: - SelectWorkoutDelegate Protocol Methods
 extension LogWorkoutViewController:  SelectWorkoutDelegate {
     
     func fetchExercises(from workout: String) {
         selectedWorkout = workout
+        loadFetchedData(from: workout)
+    }
+}
+
+// MARK: - CoreData Methods
+extension LogWorkoutViewController {
+    
+    private func loadFetchedData(from workout: String) {
+        let request = NSFetchRequest<Exercise>(entityName: "Exercise")
+        request.predicate = NSPredicate(format: "workout contains '\(workout)'")
+        
+        do {
+            if let result = try? context.fetch(request) {
+                exercises = result.compactMap { $0 }
+                print(exercises)
+            }
+        }
     }
 }
 
@@ -94,7 +112,7 @@ extension LogWorkoutViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? 1 : 5
+        section == 0 ? 1 : exercises.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,8 +125,8 @@ extension LogWorkoutViewController: UITableViewDataSource {
             return cell
         case 1:
             let cell = LogExerciseCell(style: .default, reuseIdentifier: LogExerciseCell.reuseid)
-            let content = text[indexPath.row]
-            cell.nameLabel.text = content
+            let exercise = exercises[indexPath.row]
+            cell.nameLabel.text = exercise.name
             cell.configureCellTextFields(with: self, indexPath: indexPath)
             
             return cell
@@ -118,7 +136,13 @@ extension LogWorkoutViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        section == 0 ? "Workout" : "Log Exercises"
+        if section == 0 {
+            return " "
+        } else if !exercises.isEmpty {
+            return "Log Exercises"
+        }
+        
+        return nil
     }
 }
 
