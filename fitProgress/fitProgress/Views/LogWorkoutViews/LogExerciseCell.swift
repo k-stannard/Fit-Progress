@@ -71,8 +71,8 @@ extension LogExerciseCell {
         setsTextField.delegate = delegate
         repsTextField.delegate = delegate
         
-        weightTextField.tag = 10 * indexPath.row
-        setsTextField.tag = 10 * indexPath.row + 1
-        repsTextField.tag = 10 * indexPath.row + 2
+        weightTextField.tag = 100 * indexPath.row
+        setsTextField.tag = 100 * indexPath.row + 1
+        repsTextField.tag = 100 * indexPath.row + 2
     }
 }

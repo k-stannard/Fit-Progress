@@ -13,8 +13,13 @@ class LogWorkoutViewController: UIViewController {
     let context = CoreDataManager.shared.container.viewContext
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    
     var selectedWorkout: String?
     var exercises = [Exercise]()
+    
+    lazy var weight = [String](repeating: "", count: exercises.count)
+    lazy var reps = [String](repeating: "", count: exercises.count)
+    lazy var sets = [String](repeating: "", count: exercises.count)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +82,7 @@ extension LogWorkoutViewController:  SelectWorkoutDelegate {
 }
 
 // MARK: - CoreData Methods
-extension LogWorkoutViewController {
+extension LogWorkoutViewController: NSFetchedResultsControllerDelegate {
     
     private func loadFetchedData(from workout: String) {
         let request = NSFetchRequest<Exercise>(entityName: "Exercise")
@@ -126,6 +131,7 @@ extension LogWorkoutViewController: UITableViewDataSource {
         case 1:
             let cell = LogExerciseCell(style: .default, reuseIdentifier: LogExerciseCell.reuseid)
             let exercise = exercises[indexPath.row]
+            cell.selectionStyle = .none
             cell.nameLabel.text = exercise.name
             cell.configureCellTextFields(with: self, indexPath: indexPath)
             
@@ -170,6 +176,28 @@ extension LogWorkoutViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print(textField.tag)
+        guard let text = textField.text else { return }
+        let tag = textField.tag
+        let textFieldIndex = tag % 100
+        let objectIndex = tag / 100
+        
+        if !textField.isEditing && !text.isEmpty {
+            switch textFieldIndex {
+            case 0:
+                storeUserText(to: &weight, from: textField, at: objectIndex)
+            case 1:
+                storeUserText(to: &sets, from: textField, at: objectIndex)
+            case 2:
+                storeUserText(to: &reps, from: textField, at: objectIndex)
+            default:
+                break
+            }
+        }
+    }
+    
+    func storeUserText(to array: inout [String], from textField: UITextField, at index: Int) {
+        guard let text = textField.text else { return }
+        array.remove(at: index)
+        array.insert(text, at: index)
     }
 }
