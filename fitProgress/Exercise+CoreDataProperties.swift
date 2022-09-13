@@ -19,6 +19,9 @@ extension Exercise {
     @NSManaged public var name: String
     @NSManaged public var createdAt: Date
     @NSManaged public var id: UUID
+    @NSManaged public var weight: [String]?
+    @NSManaged public var sets: [String]?
+    @NSManaged public var reps: [String]?
 }
 
 extension Exercise : Identifiable {

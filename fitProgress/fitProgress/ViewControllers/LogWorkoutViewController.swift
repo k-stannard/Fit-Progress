@@ -95,6 +95,20 @@ extension LogWorkoutViewController: NSFetchedResultsControllerDelegate {
             }
         }
     }
+    
+    private func updateExercise(_ exercises: [Exercise], weight: [String], sets: [String], reps: [String]) {
+        for key in exercises.indices {
+            exercises[key].setValue(weight[key], forKey: "weight")
+            exercises[key].setValue(sets[key], forKey: "sets")
+            exercises[key].setValue(reps[key], forKey: "reps")
+        }
+        
+        do {
+            try context.save()
+        } catch let error {
+            print("Could not save exercise data: \(error), \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: - Button Action Methods
@@ -105,7 +119,9 @@ extension LogWorkoutViewController {
     }
     
     @objc private func handleSave() {
-        print("save button tapped")
+        view.endEditing(true)
+        updateExercise(exercises, weight: weight, sets: sets, reps: reps)
+        dismiss(animated: true)
     }
 }
 
