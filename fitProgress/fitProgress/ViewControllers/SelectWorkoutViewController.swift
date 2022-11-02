@@ -59,7 +59,7 @@ extension SelectWorkoutViewController {
 extension SelectWorkoutViewController {
     
     private func loadFetchedData() {
-        let attributeToFetch = "workout"
+        let attributeToFetch = "workout.name"
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Exercise")
         request.resultType = .dictionaryResultType
         request.returnsDistinctResults = true

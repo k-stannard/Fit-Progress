@@ -27,10 +27,17 @@ struct CoreDataManager {
         let context = container.viewContext
         
         let exercise = Exercise(context: context)
-        exercise.workout = workout
         exercise.name = name
         exercise.createdAt = Date()
         exercise.id = UUID()
+        
+        if exercise.workout == nil {
+            let newWorkout = Workout(context: context)
+            newWorkout.name = workout
+            newWorkout.createdAt = Date()
+            
+            exercise.workout = newWorkout
+        }
         
         do {
             try context.save()
