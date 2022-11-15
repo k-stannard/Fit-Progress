@@ -23,7 +23,7 @@ struct CoreDataManager {
     }()
     
     @discardableResult
-    func createExercise(workout: String, name: String) -> Exercise? {
+    func createNewWorkout(workout title: String, exercise name: String) -> Exercise? {
         let context = container.viewContext
         
         let exercise = Exercise(context: context)
@@ -33,7 +33,7 @@ struct CoreDataManager {
         
         if exercise.workout == nil {
             let newWorkout = Workout(context: context)
-            newWorkout.name = workout
+            newWorkout.name = title
             newWorkout.createdAt = Date()
             
             exercise.workout = newWorkout

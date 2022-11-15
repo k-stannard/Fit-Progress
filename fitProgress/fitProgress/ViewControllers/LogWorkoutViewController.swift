@@ -86,7 +86,7 @@ extension LogWorkoutViewController: NSFetchedResultsControllerDelegate {
     
     private func loadFetchedData(from workout: String) {
         let request = NSFetchRequest<Exercise>(entityName: "Exercise")
-        request.predicate = NSPredicate(format: "workout.name contains '\(workout)'")
+        request.predicate = NSPredicate(format: "workout.name ==[c] '\(workout)'")
         
         do {
             if let result = try? context.fetch(request) {

@@ -156,8 +156,8 @@ extension HomeViewController {
 // MARK: - AddWorkoutDelegate Methods
 extension HomeViewController: AddWorkoutDelegate {
     
-    func saveNewWorkout(with workout: String, exercise: String) {
-        CoreDataManager.shared.createExercise(workout: workout, name: exercise)
+    func saveExerciseToWorkout(workout title: String, exercise: String) {
+        CoreDataManager.shared.createNewWorkout(workout: title, exercise: exercise)
     }
 }
 
