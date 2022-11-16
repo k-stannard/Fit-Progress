@@ -2,7 +2,7 @@
 //  Exercise+CoreDataProperties.swift
 //  fitProgress
 //
-//  Created by Koty Stannard on 10/25/22.
+//  Created by Koty Stannard on 11/16/22.
 //
 //
 
@@ -18,27 +18,24 @@ extension Exercise {
     @NSManaged public var createdAt: Date
     @NSManaged public var id: UUID?
     @NSManaged public var name: String
-    @NSManaged public var reps: [Int]?
-    @NSManaged public var sets: [Int]?
+    @NSManaged public var session: NSSet?
     @NSManaged public var workout: Workout?
-    @NSManaged public var weight: NSSet?
-
 }
 
-// MARK: Generated accessors for weight
+// MARK: Generated accessors for session
 extension Exercise {
 
-    @objc(addWeightObject:)
-    @NSManaged public func addToWeight(_ value: Weight)
+    @objc(addSessionObject:)
+    @NSManaged public func addToSession(_ value: Session)
 
-    @objc(removeWeightObject:)
-    @NSManaged public func removeFromWeight(_ value: Weight)
+    @objc(removeSessionObject:)
+    @NSManaged public func removeFromSession(_ value: Session)
 
-    @objc(addWeight:)
-    @NSManaged public func addToWeight(_ values: NSSet)
+    @objc(addSession:)
+    @NSManaged public func addToSession(_ values: NSSet)
 
-    @objc(removeWeight:)
-    @NSManaged public func removeFromWeight(_ values: NSSet)
+    @objc(removeSession:)
+    @NSManaged public func removeFromSession(_ values: NSSet)
 
 }
 

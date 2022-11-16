@@ -18,7 +18,6 @@ extension Workout {
     @NSManaged public var name: String
     @NSManaged public var createdAt: Date
     @NSManaged public var exercises: NSOrderedSet?
-
 }
 
 // MARK: Generated accessors for exercises

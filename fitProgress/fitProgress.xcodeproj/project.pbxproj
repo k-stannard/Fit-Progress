@@ -12,8 +12,6 @@
 		4528964028C26F4C004A1C0A /* SelectWorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528963F28C26F4C004A1C0A /* SelectWorkoutCell.swift */; };
 		4528964228C8E370004A1C0A /* SelectWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528964128C8E370004A1C0A /* SelectWorkoutViewController.swift */; };
 		453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */; };
-		455E916029084E19004CF599 /* Weight+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E915A29084E19004CF599 /* Weight+CoreDataClass.swift */; };
-		455E916129084E19004CF599 /* Weight+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E915B29084E19004CF599 /* Weight+CoreDataProperties.swift */; };
 		455E916229084E19004CF599 /* Workout+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E915C29084E19004CF599 /* Workout+CoreDataClass.swift */; };
 		455E916329084E19004CF599 /* Workout+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E915D29084E19004CF599 /* Workout+CoreDataProperties.swift */; };
 		455E916429084E19004CF599 /* Exercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E915E29084E19004CF599 /* Exercise+CoreDataClass.swift */; };
@@ -28,6 +26,10 @@
 		458F747B28B95BEA0098BA0E /* Exercise.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 458F747928B95BEA0098BA0E /* Exercise.xcdatamodeld */; };
 		458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */; };
 		458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */; };
+		45B8A1A929254F4E00BF35CC /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A529254F4E00BF35CC /* Session+CoreDataClass.swift */; };
+		45B8A1AA29254F4E00BF35CC /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A629254F4E00BF35CC /* Session+CoreDataProperties.swift */; };
+		45B8A1AB29254F4E00BF35CC /* Set+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A729254F4E00BF35CC /* Set+CoreDataClass.swift */; };
+		45B8A1AC29254F4E00BF35CC /* Set+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A829254F4E00BF35CC /* Set+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -50,8 +52,6 @@
 		4528963F28C26F4C004A1C0A /* SelectWorkoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkoutCell.swift; sourceTree = "<group>"; };
 		4528964128C8E370004A1C0A /* SelectWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkoutViewController.swift; sourceTree = "<group>"; };
 		453258F928AAE6DC005BABB7 /* AddWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutViewController.swift; sourceTree = "<group>"; };
-		455E915A29084E19004CF599 /* Weight+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weight+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		455E915B29084E19004CF599 /* Weight+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weight+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		455E915C29084E19004CF599 /* Workout+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workout+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		455E915D29084E19004CF599 /* Workout+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workout+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		455E915E29084E19004CF599 /* Exercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -68,6 +68,10 @@
 		458F747A28B95BEA0098BA0E /* Exercise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Exercise.xcdatamodel; sourceTree = "<group>"; };
 		458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWorkoutViewController.swift; sourceTree = "<group>"; };
 		458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogExerciseCell.swift; sourceTree = "<group>"; };
+		45B8A1A529254F4E00BF35CC /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		45B8A1A629254F4E00BF35CC /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		45B8A1A729254F4E00BF35CC /* Set+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		45B8A1A829254F4E00BF35CC /* Set+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,12 +100,14 @@
 		456526C028B4273700983EDE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				455E915A29084E19004CF599 /* Weight+CoreDataClass.swift */,
-				455E915B29084E19004CF599 /* Weight+CoreDataProperties.swift */,
-				455E915C29084E19004CF599 /* Workout+CoreDataClass.swift */,
-				455E915D29084E19004CF599 /* Workout+CoreDataProperties.swift */,
+				45B8A1A729254F4E00BF35CC /* Set+CoreDataClass.swift */,
+				45B8A1A829254F4E00BF35CC /* Set+CoreDataProperties.swift */,
+				45B8A1A529254F4E00BF35CC /* Session+CoreDataClass.swift */,
+				45B8A1A629254F4E00BF35CC /* Session+CoreDataProperties.swift */,
 				455E915E29084E19004CF599 /* Exercise+CoreDataClass.swift */,
 				455E915F29084E19004CF599 /* Exercise+CoreDataProperties.swift */,
+				455E915C29084E19004CF599 /* Workout+CoreDataClass.swift */,
+				455E915D29084E19004CF599 /* Workout+CoreDataProperties.swift */,
 				458F747928B95BEA0098BA0E /* Exercise.xcdatamodeld */,
 			);
 			path = Models;
@@ -283,16 +289,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45B8A1AB29254F4E00BF35CC /* Set+CoreDataClass.swift in Sources */,
 				4576FCBC28A4232100862D81 /* HomeViewController.swift in Sources */,
 				4515EC3628B00B8800FFE5E3 /* AddRowFooterView.swift in Sources */,
-				455E916129084E19004CF599 /* Weight+CoreDataProperties.swift in Sources */,
 				4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */,
 				455E916329084E19004CF599 /* Workout+CoreDataProperties.swift in Sources */,
 				455E916429084E19004CF599 /* Exercise+CoreDataClass.swift in Sources */,
+				45B8A1AA29254F4E00BF35CC /* Session+CoreDataProperties.swift in Sources */,
 				453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */,
 				455E916229084E19004CF599 /* Workout+CoreDataClass.swift in Sources */,
 				458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */,
-				455E916029084E19004CF599 /* Weight+CoreDataClass.swift in Sources */,
 				4528964228C8E370004A1C0A /* SelectWorkoutViewController.swift in Sources */,
 				456938CA28AC73C800DA0307 /* FPTextField.swift in Sources */,
 				4528964028C26F4C004A1C0A /* SelectWorkoutCell.swift in Sources */,
@@ -301,6 +307,8 @@
 				458F747B28B95BEA0098BA0E /* Exercise.xcdatamodeld in Sources */,
 				455E916529084E19004CF599 /* Exercise+CoreDataProperties.swift in Sources */,
 				458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */,
+				45B8A1AC29254F4E00BF35CC /* Set+CoreDataProperties.swift in Sources */,
+				45B8A1A929254F4E00BF35CC /* Session+CoreDataClass.swift in Sources */,
 				456938C828AC70FF00DA0307 /* AddWorkoutTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
