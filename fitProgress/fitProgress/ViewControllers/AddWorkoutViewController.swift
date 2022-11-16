@@ -29,7 +29,6 @@ class AddWorkoutViewController: UIViewController {
         configureNavigationBar()
         configureTableView()
         layoutTableView()
-        configureFooterView()
     }
 }
 
@@ -46,6 +45,7 @@ extension AddWorkoutViewController {
     private func configureTableView() {
         tableView.register(AddWorkoutTableViewCell.self, forCellReuseIdentifier: AddWorkoutTableViewCell.reuseid)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.keyboardDismissMode = .interactive
         view.addSubview(tableView)
         layoutTableView()
@@ -61,11 +61,10 @@ extension AddWorkoutViewController {
         ])
     }
     
-    private func configureFooterView() {
-        let footerView = AddRowFooterView()
+    private func configureFooterView() -> UIView? {
+        let footerView = AddRowFooterView(title: "Add exercise")
         footerView.addRowButton.addTarget(self, action: #selector(handleAddRow), for: .touchUpInside)
-        footerView.frame.size.height = 45
-        self.tableView.tableFooterView = footerView
+        return footerView
     }
 }
 
@@ -129,6 +128,18 @@ extension AddWorkoutViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         section == 0 ? "Workout" : "Exercises"
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension AddWorkoutViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        section == 1 ? configureFooterView() : nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        section == 1 ? 45.0 : 0
     }
 }
 

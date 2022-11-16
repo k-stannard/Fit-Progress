@@ -16,6 +16,8 @@ class LogWorkoutViewController: UIViewController {
     
     var selectedWorkout: String?
     var exercises = [Exercise]()
+    var names = [String]()
+    var numberOfSets = [Int]()
     
     lazy var weight = [String](repeating: "", count: exercises.count)
     lazy var reps = [String](repeating: "", count: exercises.count)
@@ -37,6 +39,8 @@ class LogWorkoutViewController: UIViewController {
         }
         
         DispatchQueue.main.async { self.tableView.reloadData() }
+        
+        numberOfSets = Array(repeating: 3, count: exercises.count)
     }
 }
 
@@ -70,6 +74,13 @@ extension LogWorkoutViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func configureFooterView(_ section: Int) -> UIView {
+        let footerView = AddRowFooterView(title: "Add set")
+        footerView.addRowButton.addTarget(self, action: #selector(handleAddRow), for: .touchUpInside)
+        footerView.addRowButton.tag = section
+        return footerView
+    }
 }
 
 // MARK: - SelectWorkoutDelegate Protocol Methods
@@ -91,7 +102,7 @@ extension LogWorkoutViewController: NSFetchedResultsControllerDelegate {
         do {
             if let result = try? context.fetch(request) {
                 exercises = result.compactMap { $0 }
-                print(exercises)
+                names = result.compactMap { $0.name }
             }
         }
     }
@@ -123,17 +134,27 @@ extension LogWorkoutViewController {
         updateExercise(exercises, weight: weight, sets: sets, reps: reps)
         dismiss(animated: true)
     }
+    
+    @objc private func handleAddRow(_ sender: UIButton) {
+        var row = sender.tag - 1
+        tableView.beginUpdates()
+        let indexPath = IndexPath(row: numberOfSets[row], section: sender.tag)
+        numberOfSets[row] += 1
+        tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        row += 1
+    }
 }
 
 // MARK: - UITableViewDataSource Methods
 extension LogWorkoutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        1 + exercises.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? 1 : exercises.count
+        section == 0 ? 1 : numberOfSets[section - 1]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -144,16 +165,13 @@ extension LogWorkoutViewController: UITableViewDataSource {
             cell.detailTextLabel?.text = selectedWorkout
             
             return cell
-        case 1:
+        default:
             let cell = LogExerciseCell(style: .default, reuseIdentifier: LogExerciseCell.reuseid)
-            let exercise = exercises[indexPath.row]
             cell.selectionStyle = .none
-            cell.nameLabel.text = exercise.name
+            cell.nameLabel.text = "Set \(indexPath.row + 1)"
             cell.configureCellTextFields(with: self, indexPath: indexPath)
             
             return cell
-        default:
-            return UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
     }
     
@@ -161,7 +179,7 @@ extension LogWorkoutViewController: UITableViewDataSource {
         if section == 0 {
             return " "
         } else if !exercises.isEmpty {
-            return "Log Exercises"
+            return names[section - 1]
         }
         
         return nil
@@ -170,6 +188,14 @@ extension LogWorkoutViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate Methods
 extension LogWorkoutViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        section == 0 ? nil : configureFooterView(section)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        section == 0 ? 0 : 45.0
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {

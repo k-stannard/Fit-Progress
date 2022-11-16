@@ -88,6 +88,7 @@
 				458F748328BFCD7F0098BA0E /* AddWorkoutViews */,
 				458F748428BFCD970098BA0E /* LogWorkoutViews */,
 				456938C928AC73C800DA0307 /* FPTextField.swift */,
+				4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -165,7 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				456938C728AC70FF00DA0307 /* AddWorkoutTableViewCell.swift */,
-				4515EC3528B00B8800FFE5E3 /* AddRowFooterView.swift */,
 			);
 			path = AddWorkoutViews;
 			sourceTree = "<group>";

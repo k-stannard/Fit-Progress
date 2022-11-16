@@ -10,10 +10,18 @@ import UIKit
 class AddRowFooterView: UIView {
     
     let addRowButton = UIButton(type: .system)
+    var title: String?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        configure()
+        layout()
+    }
+    
+    convenience init(title: String) {
+        self.init(frame: .zero)
+        self.title = title
         configure()
         layout()
     }
@@ -26,7 +34,7 @@ class AddRowFooterView: UIView {
 extension AddRowFooterView {
     
     private func configure() {
-        addRowButton.setTitle("Add exercise", for: .normal)
+        addRowButton.setTitle(title, for: .normal)
         addRowButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         addSubview(addRowButton)
     }
