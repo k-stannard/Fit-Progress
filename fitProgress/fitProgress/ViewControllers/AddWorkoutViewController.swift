@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddWorkoutDelegate: AnyObject {
-    func saveExerciseToWorkout(workout title: String, exercise: String)
+    func saveExerciseToWorkout(workout title: String, exercise: String, id: Int64)
 }
 
 class AddWorkoutViewController: UIViewController {
@@ -85,9 +85,11 @@ extension AddWorkoutViewController {
     
     @objc private func handleSave() {
         view.endEditing(true)
+        var id: Int64 = 1
         self.exercises.forEach { exercise in
             print("Adding exercise to workout: \(exercise)")
-            self.delegate?.saveExerciseToWorkout(workout: self.name, exercise: exercise)
+            self.delegate?.saveExerciseToWorkout(workout: self.name, exercise: exercise, id: id)
+            id += 1
         }
         
         dismiss(animated: true)

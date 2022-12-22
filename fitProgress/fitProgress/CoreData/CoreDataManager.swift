@@ -23,13 +23,13 @@ struct CoreDataManager {
     }()
     
     @discardableResult
-    func createNewWorkout(workout title: String, exercise name: String) -> Exercise? {
+    func createNewWorkout(workout title: String, exercise name: String, id: Int64) -> Exercise? {
         let context = container.viewContext
         
         let exercise = Exercise(context: context)
         exercise.name = name
         exercise.createdAt = Date()
-        exercise.id = UUID()
+        exercise.id = id
         
         if exercise.workout == nil {
             let newWorkout = Workout(context: context)
@@ -58,6 +58,30 @@ struct CoreDataManager {
         } catch let error {
             print("Failed to delete: \(error)")
         }
+    }
+    
+    func initializeSets(for exercises: [Exercise]) -> [Int64: [Set]] {
+        var dict: [Int64: [Set]] = [:]
+        
+        exercises.forEach { exercise in
+            dict[exercise.id] = []
+            for _ in 1...3 {
+                dict[exercise.id]?.append(addSet(to: exercise))
+            }
+        }
+
+        return dict
+    }
+    
+    func addSet(to exercise: Exercise) -> Set {
+        let context = container.viewContext
+        
+        let set = Set(context: context)
+        set.sessionDate = Date()
+        set.id = exercise.id
+        set.exercise = exercise
+        
+        return set
     }
     
     func saveContext() {

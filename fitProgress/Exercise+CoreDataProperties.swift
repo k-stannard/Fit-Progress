@@ -2,7 +2,7 @@
 //  Exercise+CoreDataProperties.swift
 //  fitProgress
 //
-//  Created by Koty Stannard on 11/16/22.
+//  Created by Koty Stannard on 11/19/22.
 //
 //
 
@@ -16,26 +16,10 @@ extension Exercise {
     }
 
     @NSManaged public var createdAt: Date
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: Int64
     @NSManaged public var name: String
-    @NSManaged public var session: NSSet?
     @NSManaged public var workout: Workout?
-}
-
-// MARK: Generated accessors for session
-extension Exercise {
-
-    @objc(addSessionObject:)
-    @NSManaged public func addToSession(_ value: Session)
-
-    @objc(removeSessionObject:)
-    @NSManaged public func removeFromSession(_ value: Session)
-
-    @objc(addSession:)
-    @NSManaged public func addToSession(_ values: NSSet)
-
-    @objc(removeSession:)
-    @NSManaged public func removeFromSession(_ values: NSSet)
+    @NSManaged public var sets: Set?
 
 }
 

@@ -13,8 +13,8 @@ class LogExerciseCell: UITableViewCell {
     
     let nameLabel = UILabel()
     let weightTextField = FPTextField(placeholder: "Lb", alignment: .center, rectBounds: 0)
-    let setsTextField = FPTextField(placeholder: "Sets", alignment: .center, rectBounds: 2)
-    let repsTextField = FPTextField(placeholder: "Reps", alignment: .center, rectBounds: 4)
+    let repsTextField = FPTextField(placeholder: "Reps", alignment: .center, rectBounds: 2)
+    let rirTextField = FPTextField(placeholder: "RIR", alignment: .center, rectBounds: 4)
 
     private let textFieldStackView = UIStackView()
     
@@ -41,7 +41,7 @@ extension LogExerciseCell {
     }
     
     func layout() {
-        [weightTextField, setsTextField, repsTextField].forEach { textField in
+        [weightTextField, repsTextField, rirTextField].forEach { textField in
             textField.font = UIFont.systemFont(ofSize: 15)
             textField.keyboardType = .numberPad
             textFieldStackView.addArrangedSubview(textField)
@@ -68,11 +68,11 @@ extension LogExerciseCell {
     
     func configureCellTextFields(with delegate: UITextFieldDelegate, indexPath: IndexPath) {
         weightTextField.delegate = delegate
-        setsTextField.delegate = delegate
         repsTextField.delegate = delegate
+        rirTextField.delegate = delegate
         
         weightTextField.tag = 100 * indexPath.row
-        setsTextField.tag = 100 * indexPath.row + 1
-        repsTextField.tag = 100 * indexPath.row + 2
+        repsTextField.tag = 100 * indexPath.row + 1
+        rirTextField.tag = 100 * indexPath.row + 2
     }
 }

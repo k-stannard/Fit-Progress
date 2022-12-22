@@ -2,21 +2,18 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Exercise" representedClassName="Exercise" syncable="YES">
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="session" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="exercise" inverseEntity="Session"/>
+        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Set" inverseName="exercise" inverseEntity="Set"/>
         <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="exercises" inverseEntity="Workout"/>
     </entity>
-    <entity name="Session" representedClassName="Session" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="session" inverseEntity="Exercise"/>
-        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Set" inverseName="session" inverseEntity="Set"/>
-    </entity>
     <entity name="Set" representedClassName="Set" syncable="YES">
-        <attribute name="reps" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="rir" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="Session" inverseName="sets" inverseEntity="Session"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="reps" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rir" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sessionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
     </entity>
     <entity name="Workout" representedClassName="Workout" syncable="YES">
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>

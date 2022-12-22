@@ -12,16 +12,43 @@ class LogWorkoutViewController: UIViewController {
     
     let context = CoreDataManager.shared.container.viewContext
     
+    lazy var fetchedResultsController: NSFetchedResultsController<Exercise> = {
+        let request = NSFetchRequest<Exercise>(entityName: "Exercise")
+        let idSort = NSSortDescriptor(key: "id", ascending: true)
+        
+        request.sortDescriptors = [idSort]
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: context,
+            sectionNameKeyPath: "name",
+            cacheName: nil
+        )
+        fetchedResultsController.delegate = self
+        return fetchedResultsController
+    }()
+    
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     var selectedWorkout: String?
+    var hasSelectedWorkout = false
     var exercises = [Exercise]()
-    var names = [String]()
-    var numberOfSets = [Int]()
     
-    lazy var weight = [String](repeating: "", count: exercises.count)
-    lazy var reps = [String](repeating: "", count: exercises.count)
-    lazy var sets = [String](repeating: "", count: exercises.count)
+    var sortedKeys = [Int64]() {
+        didSet {
+            if oldValue != sortedKeys {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    var exerciseSets: [Int64: [Set]] = [:] {
+        didSet {
+            sortedKeys = exerciseSets.keys.sorted()
+        }
+    }
+    
+    var textFieldValues = NSMutableDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +64,6 @@ class LogWorkoutViewController: UIViewController {
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
-        
-        DispatchQueue.main.async { self.tableView.reloadData() }
-        
-        numberOfSets = Array(repeating: 3, count: exercises.count)
     }
 }
 
@@ -88,38 +111,28 @@ extension LogWorkoutViewController:  SelectWorkoutDelegate {
     
     func fetchExercises(from workout: String) {
         selectedWorkout = workout
-        loadFetchedData(from: workout)
+        hasSelectedWorkout = true
+
+        do {
+            fetchedResultsController.fetchRequest.predicate = NSPredicate(format: "workout.name ==[c] '\(workout)'")
+            try fetchedResultsController.performFetch()
+            
+            guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return }
+            exercises = fetchedObjects.map { $0 }
+            
+            exerciseSets = CoreDataManager.shared.initializeSets(for: exercises)
+            
+            DispatchQueue.main.async { self.tableView.reloadData() }
+        } catch let error {
+            print("Failed to load saved data: \(error)")
+        }
     }
 }
 
 // MARK: - CoreData Methods
 extension LogWorkoutViewController: NSFetchedResultsControllerDelegate {
     
-    private func loadFetchedData(from workout: String) {
-        let request = NSFetchRequest<Exercise>(entityName: "Exercise")
-        request.predicate = NSPredicate(format: "workout.name ==[c] '\(workout)'")
-        
-        do {
-            if let result = try? context.fetch(request) {
-                exercises = result.compactMap { $0 }
-                names = result.compactMap { $0.name }
-            }
-        }
-    }
     
-    private func updateExercise(_ exercises: [Exercise], weight: [String], sets: [String], reps: [String]) {
-        for key in exercises.indices {
-            exercises[key].setValue(weight[key], forKey: "weight")
-            exercises[key].setValue(sets[key], forKey: "sets")
-            exercises[key].setValue(reps[key], forKey: "reps")
-        }
-        
-        do {
-            try context.save()
-        } catch let error {
-            print("Could not save exercise data: \(error), \(error.localizedDescription)")
-        }
-    }
 }
 
 // MARK: - Button Action Methods
@@ -131,18 +144,20 @@ extension LogWorkoutViewController {
     
     @objc private func handleSave() {
         view.endEditing(true)
-        updateExercise(exercises, weight: weight, sets: sets, reps: reps)
+        
         dismiss(animated: true)
     }
     
     @objc private func handleAddRow(_ sender: UIButton) {
-        var row = sender.tag - 1
+        let section = sender.tag
+        let row = (exerciseSets[Int64(section)]?.count ?? 0)
+        
         tableView.beginUpdates()
-        let indexPath = IndexPath(row: numberOfSets[row], section: sender.tag)
-        numberOfSets[row] += 1
+        let indexPath = IndexPath(row: row, section: section)
         tableView.insertRows(at: [indexPath], with: .automatic)
+        let set = CoreDataManager.shared.addSet(to: exercises[section - 1])
+        exerciseSets[Int64(section)]?.append(set)
         tableView.endUpdates()
-        row += 1
     }
 }
 
@@ -150,11 +165,16 @@ extension LogWorkoutViewController {
 extension LogWorkoutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        1 + exercises.count
+        let fetchedObjects = fetchedResultsController.fetchedObjects
+        return 1 + (fetchedObjects?.count ?? 0)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? 1 : numberOfSets[section - 1]
+        if hasSelectedWorkout {
+            return section == 0 ? 1 : exerciseSets[sortedKeys[section - 1]]?.count ?? 0
+        }
+        
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -171,6 +191,14 @@ extension LogWorkoutViewController: UITableViewDataSource {
             cell.nameLabel.text = "Set \(indexPath.row + 1)"
             cell.configureCellTextFields(with: self, indexPath: indexPath)
             
+            let weightIndex = CustomIndexPath(item: indexPath.item, section: indexPath.section, textFieldIndex: 0)
+            let repsIndex = CustomIndexPath(item: indexPath.item, section: indexPath.section, textFieldIndex: 1)
+            let rirIndex = CustomIndexPath(item: indexPath.item, section: indexPath.section, textFieldIndex: 2)
+            
+            cell.weightTextField.text = textFieldValues[weightIndex] as? String
+            cell.repsTextField.text = textFieldValues[repsIndex] as? String
+            cell.rirTextField.text = textFieldValues[rirIndex] as? String
+            
             return cell
         }
     }
@@ -178,10 +206,13 @@ extension LogWorkoutViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return " "
-        } else if !exercises.isEmpty {
-            return names[section - 1]
+        } else {
+            if hasSelectedWorkout {
+                let object = fetchedResultsController.object(at: IndexPath(row: 0, section: section - 1))
+                return object.name
+            }
         }
-        
+
         return nil
     }
 }
@@ -223,23 +254,32 @@ extension LogWorkoutViewController: UITextFieldDelegate {
         let textFieldIndex = tag % 100
         let objectIndex = tag / 100
         
+        let pointInTable = textField.convert(textField.bounds.origin, to: self.tableView)
+        guard let textFieldIndexPath = self.tableView.indexPathForRow(at: pointInTable) else { return }
+        let sectionKey = sortedKeys[textFieldIndexPath.section - 1]
+        guard let setArray = exerciseSets[sectionKey] else { return }
+        let set = setArray[textFieldIndexPath.row]
+        
+        let index = CustomIndexPath(item: objectIndex, section: textFieldIndexPath.section, textFieldIndex: textFieldIndex)
+        
         if !textField.isEditing && !text.isEmpty {
-            switch textFieldIndex {
-            case 0:
-                storeUserText(to: &weight, from: textField, at: objectIndex)
-            case 1:
-                storeUserText(to: &sets, from: textField, at: objectIndex)
-            case 2:
-                storeUserText(to: &reps, from: textField, at: objectIndex)
+            switch textFieldIndexPath.row {
+            case 0..<setArray.count:
+                textFieldValues[index] = text
+                
+                switch textFieldIndex {
+                case 0:
+                    set.weight = Double(text)!
+                case 1:
+                    set.reps = Int64(text)!
+                case 2:
+                    set.rir = Double(text)!
+                default:
+                    return
+                }
             default:
-                break
+                return
             }
         }
-    }
-    
-    func storeUserText(to array: inout [String], from textField: UITextField, at index: Int) {
-        guard let text = textField.text else { return }
-        array.remove(at: index)
-        array.insert(text, at: index)
     }
 }

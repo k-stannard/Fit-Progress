@@ -23,13 +23,12 @@
 		4576FCC128A4232300862D81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4576FCC028A4232300862D81 /* Assets.xcassets */; };
 		4576FCC428A4232300862D81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4576FCC228A4232300862D81 /* LaunchScreen.storyboard */; };
 		458F747828B9325D0098BA0E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F747728B9325D0098BA0E /* CoreDataManager.swift */; };
-		458F747B28B95BEA0098BA0E /* Exercise.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 458F747928B95BEA0098BA0E /* Exercise.xcdatamodeld */; };
 		458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */; };
 		458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */; };
-		45B8A1A929254F4E00BF35CC /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A529254F4E00BF35CC /* Session+CoreDataClass.swift */; };
-		45B8A1AA29254F4E00BF35CC /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A629254F4E00BF35CC /* Session+CoreDataProperties.swift */; };
 		45B8A1AB29254F4E00BF35CC /* Set+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A729254F4E00BF35CC /* Set+CoreDataClass.swift */; };
 		45B8A1AC29254F4E00BF35CC /* Set+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1A829254F4E00BF35CC /* Set+CoreDataProperties.swift */; };
+		45B8A1AF2929542E00BF35CC /* Exercise.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45B8A1AD2929542E00BF35CC /* Exercise.xcdatamodeld */; };
+		45BB0BFC2952BBD400C21D29 /* CustomIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB0BFB2952BBD400C21D29 /* CustomIndexPath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -65,13 +64,12 @@
 		4576FCC328A4232300862D81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4576FCC528A4232300862D81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		458F747728B9325D0098BA0E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		458F747A28B95BEA0098BA0E /* Exercise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Exercise.xcdatamodel; sourceTree = "<group>"; };
 		458F748028BFB8D60098BA0E /* LogWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWorkoutViewController.swift; sourceTree = "<group>"; };
 		458F748528BFF9DB0098BA0E /* LogExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogExerciseCell.swift; sourceTree = "<group>"; };
-		45B8A1A529254F4E00BF35CC /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		45B8A1A629254F4E00BF35CC /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		45B8A1A729254F4E00BF35CC /* Set+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		45B8A1A829254F4E00BF35CC /* Set+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		45B8A1AE2929542E00BF35CC /* Exercise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Exercise.xcdatamodel; sourceTree = "<group>"; };
+		45BB0BFB2952BBD400C21D29 /* CustomIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIndexPath.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,13 +100,11 @@
 			children = (
 				45B8A1A729254F4E00BF35CC /* Set+CoreDataClass.swift */,
 				45B8A1A829254F4E00BF35CC /* Set+CoreDataProperties.swift */,
-				45B8A1A529254F4E00BF35CC /* Session+CoreDataClass.swift */,
-				45B8A1A629254F4E00BF35CC /* Session+CoreDataProperties.swift */,
 				455E915E29084E19004CF599 /* Exercise+CoreDataClass.swift */,
 				455E915F29084E19004CF599 /* Exercise+CoreDataProperties.swift */,
 				455E915C29084E19004CF599 /* Workout+CoreDataClass.swift */,
 				455E915D29084E19004CF599 /* Workout+CoreDataProperties.swift */,
-				458F747928B95BEA0098BA0E /* Exercise.xcdatamodeld */,
+				45B8A1AD2929542E00BF35CC /* Exercise.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -116,6 +112,7 @@
 		456526D928B4346900983EDE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				45BB0BFB2952BBD400C21D29 /* CustomIndexPath.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -289,13 +286,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BB0BFC2952BBD400C21D29 /* CustomIndexPath.swift in Sources */,
 				45B8A1AB29254F4E00BF35CC /* Set+CoreDataClass.swift in Sources */,
 				4576FCBC28A4232100862D81 /* HomeViewController.swift in Sources */,
 				4515EC3628B00B8800FFE5E3 /* AddRowFooterView.swift in Sources */,
 				4576FCB828A4232100862D81 /* AppDelegate.swift in Sources */,
 				455E916329084E19004CF599 /* Workout+CoreDataProperties.swift in Sources */,
 				455E916429084E19004CF599 /* Exercise+CoreDataClass.swift in Sources */,
-				45B8A1AA29254F4E00BF35CC /* Session+CoreDataProperties.swift in Sources */,
+				45B8A1AF2929542E00BF35CC /* Exercise.xcdatamodeld in Sources */,
 				453258FA28AAE6DC005BABB7 /* AddWorkoutViewController.swift in Sources */,
 				455E916229084E19004CF599 /* Workout+CoreDataClass.swift in Sources */,
 				458F748128BFB8D60098BA0E /* LogWorkoutViewController.swift in Sources */,
@@ -304,11 +302,9 @@
 				4528964028C26F4C004A1C0A /* SelectWorkoutCell.swift in Sources */,
 				458F747828B9325D0098BA0E /* CoreDataManager.swift in Sources */,
 				45204A8328AABE5F00BD7099 /* EmptyStateView.swift in Sources */,
-				458F747B28B95BEA0098BA0E /* Exercise.xcdatamodeld in Sources */,
 				455E916529084E19004CF599 /* Exercise+CoreDataProperties.swift in Sources */,
 				458F748628BFF9DB0098BA0E /* LogExerciseCell.swift in Sources */,
 				45B8A1AC29254F4E00BF35CC /* Set+CoreDataProperties.swift in Sources */,
-				45B8A1A929254F4E00BF35CC /* Session+CoreDataClass.swift in Sources */,
 				456938C828AC70FF00DA0307 /* AddWorkoutTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,12 +515,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		458F747928B95BEA0098BA0E /* Exercise.xcdatamodeld */ = {
+		45B8A1AD2929542E00BF35CC /* Exercise.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				458F747A28B95BEA0098BA0E /* Exercise.xcdatamodel */,
+				45B8A1AE2929542E00BF35CC /* Exercise.xcdatamodel */,
 			);
-			currentVersion = 458F747A28B95BEA0098BA0E /* Exercise.xcdatamodel */;
+			currentVersion = 45B8A1AE2929542E00BF35CC /* Exercise.xcdatamodel */;
 			path = Exercise.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
