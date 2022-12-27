@@ -9,22 +9,23 @@ import CoreData
 
 struct CoreDataManager {
     
-    static let shared = CoreDataManager()
+    let persistentContainer: NSPersistentContainer
     
-    let container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Exercise")
-        container.loadPersistentStores { _, error in
+    init() {
+        self.persistentContainer = NSPersistentContainer(name: "Exercise")
+        persistentContainer.loadPersistentStores { _, error in
             if let error = error {
-                fatalError("Loading of store failed \(error)")
+                fatalError("CoreData store failed to load with error: \(error)")
             }
         }
-        
-        return container
-    }()
+    }
+}
+
+extension CoreDataManager {
     
     @discardableResult
     func createNewWorkout(workout title: String, exercise name: String, id: Int64) -> Exercise? {
-        let context = container.viewContext
+        let context = persistentContainer.viewContext
         
         let exercise = Exercise(context: context)
         exercise.name = name
@@ -50,7 +51,7 @@ struct CoreDataManager {
     }
     
     func deleteExercise(exercise: Exercise) {
-        let context = container.viewContext
+        let context = persistentContainer.viewContext
         context.delete(exercise)
         
         do {
@@ -74,7 +75,7 @@ struct CoreDataManager {
     }
     
     func addSet(to exercise: Exercise) -> Set {
-        let context = container.viewContext
+        let context = persistentContainer.viewContext
         
         let set = Set(context: context)
         set.sessionDate = Date()
@@ -85,9 +86,9 @@ struct CoreDataManager {
     }
     
     func saveContext() {
-        if container.viewContext.hasChanges {
+        if persistentContainer.viewContext.hasChanges {
             do {
-                try container.viewContext.save()
+                try persistentContainer.viewContext.save()
             } catch {
                 print("An error occurred while saving: \(error)")
             }

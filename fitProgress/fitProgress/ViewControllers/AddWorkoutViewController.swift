@@ -13,7 +13,7 @@ protocol AddWorkoutDelegate: AnyObject {
 
 class AddWorkoutViewController: UIViewController {
     
-    let dataManager = CoreDataManager.shared
+    let coreDataManager: CoreDataManager
     weak var delegate: AddWorkoutDelegate?
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -29,6 +29,16 @@ class AddWorkoutViewController: UIViewController {
         configureNavigationBar()
         configureTableView()
         layoutTableView()
+    }
+    
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

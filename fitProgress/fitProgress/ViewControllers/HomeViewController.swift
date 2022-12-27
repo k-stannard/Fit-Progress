@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: context,
+            managedObjectContext: coreDataManager.persistentContainer.viewContext,
             sectionNameKeyPath: "workout.name",
             cacheName: nil
         )
@@ -27,11 +27,21 @@ class HomeViewController: UIViewController {
         return fetchedResultsController
     }()
     
-    let context = CoreDataManager.shared.container.viewContext
+    let coreDataManager: CoreDataManager
     
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
     let emptyStateView = EmptyStateView()
 
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -138,7 +148,7 @@ extension HomeViewController {
     }
     
     private func presentAddWorkoutController() {
-        let addWorkoutVC = AddWorkoutViewController()
+        let addWorkoutVC = AddWorkoutViewController(coreDataManager: coreDataManager)
         addWorkoutVC.delegate = self
         let navController = UINavigationController(rootViewController: addWorkoutVC)
         navController.modalPresentationStyle = .fullScreen
@@ -146,7 +156,7 @@ extension HomeViewController {
     }
     
     private func presentLogWorkoutController() {
-        let logWorkoutVC = LogWorkoutViewController()
+        let logWorkoutVC = LogWorkoutViewController(coreDataManager: coreDataManager)
         let navController = UINavigationController(rootViewController: logWorkoutVC)
         navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true)
@@ -157,7 +167,7 @@ extension HomeViewController {
 extension HomeViewController: AddWorkoutDelegate {
     
     func saveExerciseToWorkout(workout title: String, exercise: String, id: Int64) {
-        CoreDataManager.shared.createNewWorkout(workout: title, exercise: exercise, id: id)
+        coreDataManager.createNewWorkout(workout: title, exercise: exercise, id: id)
     }
 }
 
@@ -228,8 +238,8 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let exercise = self.fetchedResultsController.object(at: indexPath)
-            CoreDataManager.shared.container.viewContext.delete(exercise)
-            CoreDataManager.shared.saveContext()
+            coreDataManager.persistentContainer.viewContext.delete(exercise)
+            coreDataManager.saveContext()
             
             checkWorkoutIsEmpty()
         }

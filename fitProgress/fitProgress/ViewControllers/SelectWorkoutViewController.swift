@@ -16,8 +16,14 @@ class SelectWorkoutViewController: UIViewController {
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
-    let context = CoreDataManager.shared.container.viewContext
+    let coreDataManager: CoreDataManager
     weak var delegate: SelectWorkoutDelegate?
+    
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
     
     var workouts = [String]()
     
@@ -28,6 +34,10 @@ class SelectWorkoutViewController: UIViewController {
         configureTableView()
         layoutTableView()
         loadFetchedData()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -66,7 +76,7 @@ extension SelectWorkoutViewController {
         request.propertiesToFetch = [attributeToFetch]
         
         do {
-            if let result = try context.fetch(request) as? [[String: String]] {
+            if let result = try coreDataManager.persistentContainer.viewContext.fetch(request) as? [[String: String]] {
                 workouts = result.compactMap { $0[attributeToFetch] }
             }
         } catch let error {

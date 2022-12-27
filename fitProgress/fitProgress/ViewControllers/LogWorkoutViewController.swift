@@ -8,9 +8,19 @@
 import UIKit
 import CoreData
 
-class LogWorkoutViewController: UIViewController {
+class LogWorkoutViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
-    let context = CoreDataManager.shared.container.viewContext
+    let coreDataManager: CoreDataManager
+    
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     lazy var fetchedResultsController: NSFetchedResultsController<Exercise> = {
         let request = NSFetchRequest<Exercise>(entityName: "Exercise")
@@ -20,7 +30,7 @@ class LogWorkoutViewController: UIViewController {
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: context,
+            managedObjectContext: coreDataManager.persistentContainer.viewContext,
             sectionNameKeyPath: "name",
             cacheName: nil
         )
@@ -120,19 +130,13 @@ extension LogWorkoutViewController:  SelectWorkoutDelegate {
             guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return }
             exercises = fetchedObjects.map { $0 }
             
-            exerciseSets = CoreDataManager.shared.initializeSets(for: exercises)
+            exerciseSets = coreDataManager.initializeSets(for: exercises)
             
             DispatchQueue.main.async { self.tableView.reloadData() }
         } catch let error {
             print("Failed to load saved data: \(error)")
         }
     }
-}
-
-// MARK: - CoreData Methods
-extension LogWorkoutViewController: NSFetchedResultsControllerDelegate {
-    
-    
 }
 
 // MARK: - Button Action Methods
@@ -155,7 +159,7 @@ extension LogWorkoutViewController {
         tableView.beginUpdates()
         let indexPath = IndexPath(row: row, section: section)
         tableView.insertRows(at: [indexPath], with: .automatic)
-        let set = CoreDataManager.shared.addSet(to: exercises[section - 1])
+        let set = coreDataManager.addSet(to: exercises[section - 1])
         exerciseSets[Int64(section)]?.append(set)
         tableView.endUpdates()
     }
@@ -230,7 +234,7 @@ extension LogWorkoutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            let selectWorkoutVC = SelectWorkoutViewController()
+            let selectWorkoutVC = SelectWorkoutViewController(coreDataManager: coreDataManager)
             selectWorkoutVC.delegate = self
             navigationController?.pushViewController(selectWorkoutVC, animated: true)
         }
