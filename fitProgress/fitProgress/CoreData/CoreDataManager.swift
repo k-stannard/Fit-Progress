@@ -61,22 +61,20 @@ extension CoreDataManager {
         }
     }
     
-    func initializeSets(for exercises: [Exercise]) -> [Int64: [Set]] {
+    func initializeSets(for exercises: [Exercise], in context: NSManagedObjectContext) -> [Int64: [Set]] {
         var dict: [Int64: [Set]] = [:]
         
         exercises.forEach { exercise in
             dict[exercise.id] = []
             for _ in 1...3 {
-                dict[exercise.id]?.append(addSet(to: exercise))
+                dict[exercise.id]?.append(addSet(to: exercise, in: context))
             }
         }
 
         return dict
     }
     
-    func addSet(to exercise: Exercise) -> Set {
-        let context = persistentContainer.viewContext
-        
+    func addSet(to exercise: Exercise, in context: NSManagedObjectContext) -> Set {
         let set = Set(context: context)
         set.sessionDate = Date()
         set.id = exercise.id

@@ -11,9 +11,15 @@ import CoreData
 class LogWorkoutViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
     let coreDataManager: CoreDataManager
+    private let childContext: NSManagedObjectContext
     
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
+        
+        let childContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        childContext.parent = coreDataManager.persistentContainer.viewContext
+        
+        self.childContext = childContext
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -30,7 +36,7 @@ class LogWorkoutViewController: UIViewController, NSFetchedResultsControllerDele
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: coreDataManager.persistentContainer.viewContext,
+            managedObjectContext: childContext,
             sectionNameKeyPath: "name",
             cacheName: nil
         )
@@ -43,6 +49,7 @@ class LogWorkoutViewController: UIViewController, NSFetchedResultsControllerDele
     var selectedWorkout: String?
     var hasSelectedWorkout = false
     var exercises = [Exercise]()
+    var textFieldValues = NSMutableDictionary()
     
     var sortedKeys = [Int64]() {
         didSet {
@@ -57,8 +64,6 @@ class LogWorkoutViewController: UIViewController, NSFetchedResultsControllerDele
             sortedKeys = exerciseSets.keys.sorted()
         }
     }
-    
-    var textFieldValues = NSMutableDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +135,7 @@ extension LogWorkoutViewController:  SelectWorkoutDelegate {
             guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return }
             exercises = fetchedObjects.map { $0 }
             
-            exerciseSets = coreDataManager.initializeSets(for: exercises)
+            exerciseSets = coreDataManager.initializeSets(for: exercises, in: childContext)
             
             DispatchQueue.main.async { self.tableView.reloadData() }
         } catch let error {
@@ -142,6 +147,16 @@ extension LogWorkoutViewController:  SelectWorkoutDelegate {
 // MARK: - Button Action Methods
 extension LogWorkoutViewController {
     
+    private func persistChildContextChanges() {
+        if childContext.hasChanges { print("Child context has changes, saving..") }
+        do {
+            try childContext.save()
+            print("child context saved")
+        } catch let error {
+            print("Failed to save to child context with error: \(error)")
+        }
+    }
+    
     @objc private func handleCancel() {
         dismiss(animated: true)
     }
@@ -149,7 +164,16 @@ extension LogWorkoutViewController {
     @objc private func handleSave() {
         view.endEditing(true)
         
-        dismiss(animated: true)
+        defer {
+            dismiss(animated: true)
+        }
+        
+        do {
+            try coreDataManager.persistentContainer.viewContext.save()
+            print("Parent context saved")
+        } catch let error {
+            print("Failed to save parent context: \(error)")
+        }
     }
     
     @objc private func handleAddRow(_ sender: UIButton) {
@@ -159,7 +183,7 @@ extension LogWorkoutViewController {
         tableView.beginUpdates()
         let indexPath = IndexPath(row: row, section: section)
         tableView.insertRows(at: [indexPath], with: .automatic)
-        let set = coreDataManager.addSet(to: exercises[section - 1])
+        let set = coreDataManager.addSet(to: exercises[section - 1], in: childContext)
         exerciseSets[Int64(section)]?.append(set)
         tableView.endUpdates()
     }
@@ -285,5 +309,7 @@ extension LogWorkoutViewController: UITextFieldDelegate {
                 return
             }
         }
+    
+        persistChildContextChanges()
     }
 }
